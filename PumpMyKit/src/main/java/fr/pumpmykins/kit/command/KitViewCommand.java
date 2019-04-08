@@ -42,8 +42,7 @@ public class KitViewCommand implements ICommand {
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

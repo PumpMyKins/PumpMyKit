@@ -2,11 +2,15 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitAddCommand implements ICommand {
 
@@ -18,20 +22,20 @@ public class KitAddCommand implements ICommand {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "kitadd";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "kit.syntax.add";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return Lists.newArrayList("ka");
 	}
 
 	@Override
@@ -42,7 +46,9 @@ public class KitAddCommand implements ICommand {
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		// TODO Auto-generated method stub
+		if(sender instanceof EntityPlayer) {
+			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.add");
+		}
 		return false;
 	}
 
@@ -55,7 +61,6 @@ public class KitAddCommand implements ICommand {
 
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

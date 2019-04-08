@@ -5,8 +5,10 @@ import java.util.List;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitReloadCommand implements ICommand {
 
@@ -42,8 +44,10 @@ public class KitReloadCommand implements ICommand {
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		// TODO Auto-generated method stub
-		return false;
+		if(sender instanceof EntityPlayer) {
+			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.reload");
+		}
+		return true;
 	}
 
 	@Override
