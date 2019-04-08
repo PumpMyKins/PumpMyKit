@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.server.permission.DefaultPermissionLevel;
+import net.minecraftforge.server.permission.PermissionAPI;
 
 
 @Mod(useMetadata= true, modid = "pmkkit")
@@ -43,6 +45,12 @@ public class MainKit {
 	public void init(FMLInitializationEvent event) {
 		
 		proxy.init();
+		PermissionAPI.registerNode("kit.add", DefaultPermissionLevel.OP, "Allow OP to add a Kit");
+		PermissionAPI.registerNode("kit.delete", DefaultPermissionLevel.OP, "Allow OP to delete a Kit");
+		PermissionAPI.registerNode("kit.buy.end", DefaultPermissionLevel.OP, "Allow OP to end the duration of a Kit");
+		PermissionAPI.registerNode("kit.buy.start", DefaultPermissionLevel.OP, "Allow OP to give a Kit to someone");
+		PermissionAPI.registerNode("kit.modify", DefaultPermissionLevel.OP, "Allow OP to modify a Kit");
+		PermissionAPI.registerNode("kit.reload", DefaultPermissionLevel.OP, "Allow OP to reload the Kit list");
 	}
 	
 	@EventHandler
