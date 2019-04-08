@@ -2,6 +2,8 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -21,19 +23,19 @@ public class KitReloadCommand implements ICommand {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "kitreload";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
 		// TODO Auto-generated method stub
-		return null;
+		return "kit.syntax.reload";
 	}
 
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return null;
+		return Lists.newArrayList("kr");
 	}
 
 	@Override

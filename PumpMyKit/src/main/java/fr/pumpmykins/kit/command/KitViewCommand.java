@@ -2,6 +2,8 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -19,19 +21,19 @@ public class KitViewCommand implements ICommand {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "kitview";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
 		// TODO Auto-generated method stub
-		return null;
+		return "kit.syntax.view";
 	}
 
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return null;
+		return Lists.newArrayList("kv");
 	}
 
 	@Override

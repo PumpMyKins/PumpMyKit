@@ -2,6 +2,8 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -20,20 +22,20 @@ public class KitEndBuyCommand implements ICommand {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return "kitendbuy";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return "kit.syntax.endbuy";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return Lists.newArrayList("kbd");
 	}
 
 	@Override
