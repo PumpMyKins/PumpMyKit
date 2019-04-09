@@ -65,19 +65,35 @@ public class KitAddCommand implements ICommand {
 				BlockPos chest_pos = player.getPosition();
 				
 				EnumFacing i = player.getHorizontalFacing();
-				if(i == EnumFacing.EAST)
+				if(i == EnumFacing.EAST) {
 					chest_pos = chest_pos.east();
-				if(i == EnumFacing.WEST)
+					chest_pos = chest_pos.east();
+				}
+				if(i == EnumFacing.WEST) {
 					chest_pos = chest_pos.west();
-				if(i == EnumFacing.SOUTH)
+					chest_pos = chest_pos.west();
+				}
+				if(i == EnumFacing.SOUTH) {
 					chest_pos = chest_pos.south();
-				else
+					chest_pos = chest_pos.south();
+				}
+				else {
 					chest_pos = chest_pos.north();
-				
+					chest_pos = chest_pos.north();
+				}
 				World w = player.getEntityWorld();
 				IBlockState chest = Blocks.CHEST.getDefaultState();
+				IBlockState bedrock = Blocks.BARRIER.getDefaultState();
+				
+				chest_pos = chest_pos.up();
 				
 				w.setBlockState(chest_pos, chest);
+				w.setBlockState(chest_pos.north(), bedrock);
+				w.setBlockState(chest_pos.east(), bedrock);
+				w.setBlockState(chest_pos.west(), bedrock);
+				w.setBlockState(chest_pos.south(), bedrock);
+				w.setBlockState(chest_pos.down(), bedrock);
+				w.setBlockState(chest_pos.up(), bedrock);
 				
 				Kit k = new Kit();
 				k.setName(kitname);
