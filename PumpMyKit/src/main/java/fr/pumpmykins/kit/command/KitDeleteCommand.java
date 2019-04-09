@@ -5,12 +5,15 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.KitList;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitDeleteCommand implements ICommand {
@@ -52,6 +55,19 @@ public class KitDeleteCommand implements ICommand {
 			if(kitlist.getKit(args[0]) != null) {
 				
 				kitlist.removeKit(args[0]);
+				
+				BlockPos chest_pos = new BlockPos(kitlist.getKit(args[0]).getX(), kitlist.getKit(args[0]).getY(), kitlist.getKit(args[0]).getZ());
+				
+				World w = server.getWorld(1);
+				
+				w.setBlockToAir(chest_pos);
+				w.setBlockToAir(chest_pos.north());
+				w.setBlockToAir(chest_pos.east());
+				w.setBlockToAir(chest_pos.west());
+				w.setBlockToAir(chest_pos.south());
+				w.setBlockToAir(chest_pos.down());
+				w.setBlockToAir(chest_pos.up());
+				
 			}
 		}
 	}
