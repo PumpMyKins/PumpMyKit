@@ -1,17 +1,8 @@
 package fr.pumpmykins.kit;
 
-import java.util.List;
-
 import org.apache.logging.log4j.Logger;
 
-import fr.pumpmykins.kit.command.KitAddCommand;
-import fr.pumpmykins.kit.command.KitBuyCommand;
-import fr.pumpmykins.kit.command.KitDeleteCommand;
-import fr.pumpmykins.kit.command.KitEndBuyCommand;
-import fr.pumpmykins.kit.command.KitGetCommand;
-import fr.pumpmykins.kit.command.KitModifyCommand;
-import fr.pumpmykins.kit.command.KitReloadCommand;
-import fr.pumpmykins.kit.command.KitViewCommand;
+import fr.pumpmykins.kit.command.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -38,7 +29,7 @@ public class MainKit {
 	
 	private static final String KITLIST_KEY = MODID+"_kitlist";
 	
-	private List<Kit> kitlist;
+	private KitList kitlistinstance;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -64,16 +55,18 @@ public class MainKit {
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
-		event.registerServerCommand(new KitAddCommand());
-		event.registerServerCommand(new KitDeleteCommand());
+		this.setKitlistinstance(new KitList());
+		
+		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
+		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitViewCommand());
-		event.registerServerCommand(new KitGetCommand());
+		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitBuyCommand());
 		event.registerServerCommand(new KitEndBuyCommand());
 		event.registerServerCommand(new KitReloadCommand());
-		event.registerServerCommand(new KitModifyCommand());
-		
-		KitList.loadKit();
+		event.registerServerCommand(new KitModifyCommand(this.kitlistinstance));
+		event.registerServerCommand(new KitValidCommand(this.kitlistinstance));
+			
 	}
 
 	public static MainKit getInstance() {
@@ -98,6 +91,14 @@ public class MainKit {
 
 	public static String getKitlistKey() {
 		return KITLIST_KEY;
+	}
+
+	public KitList getKitlistinstance() {
+		return kitlistinstance;
+	}
+
+	public void setKitlistinstance(KitList kitlistinstance) {
+		this.kitlistinstance = kitlistinstance;
 	}
 	
 	

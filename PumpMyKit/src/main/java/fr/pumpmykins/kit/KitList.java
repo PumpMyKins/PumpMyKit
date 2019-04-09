@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,14 +13,16 @@ public class KitList extends WorldSavedData {
 		
 	public KitList(String key) {
 		super(key);
+		this.kitlist = new ArrayList<Kit>();
 	}
 	public KitList() {
 		
 		super(MainKit.getKitlistKey());
+		this.kitlist = new ArrayList<Kit>();
 	}
 	
 	
-	private static List<Kit> kitlist;
+	private List<Kit> kitlist;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -41,7 +44,7 @@ public class KitList extends WorldSavedData {
 			tmp_k.setY(tmp_nbt.getInteger("y"));
 			tmp_k.setZ(tmp_nbt.getInteger("z"));
 			
-			kitlist.add(tmp_k);
+			this.kitlist.add(tmp_k);
 		}
 	}
 
@@ -49,7 +52,7 @@ public class KitList extends WorldSavedData {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		
 		NBTTagList kit_list = new NBTTagList();
-		for(Kit k : kitlist) {
+		for(Kit k : this.kitlist) {
 			
 			NBTTagCompound tmp = new NBTTagCompound();
 			tmp.setString("name", k.getName());
@@ -68,8 +71,8 @@ public class KitList extends WorldSavedData {
 	
 	public void removeKit(Kit k) {
 		
-		for(int i = 0; i < kitlist.size(); i ++) {
-			if(kitlist.get(i).getName().equals(k.getName())) {
+		for(int i = 0; i < this.kitlist.size(); i ++) {
+			if(this.kitlist.get(i).getName().equals(k.getName())) {
 				
 				kitlist.remove(i);
 				markDirty();
@@ -80,10 +83,10 @@ public class KitList extends WorldSavedData {
 	
 	public void removeKit(String name) {
 		
-		for(int i = 0; i < kitlist.size(); i ++) {
-			if(kitlist.get(i).getName().equals(name)) {
+		for(int i = 0; i < this.kitlist.size(); i ++) {
+			if(this.kitlist.get(i).getName().equals(name)) {
 				
-				kitlist.remove(i);
+				this.kitlist.remove(i);
 			}
 		}
 	}
@@ -91,8 +94,8 @@ public class KitList extends WorldSavedData {
 	public void addKit(Kit k) {
 		
 		boolean exist = false;
-		for(int i = 0; i < kitlist.size(); i ++) {
-			if(kitlist.get(i).getName().equals(k.getName())) {
+		for(int i = 0; i < this.kitlist.size(); i ++) {
+			if(this.kitlist.get(i).getName().equals(k.getName())) {
 				
 				exist = true;
 				break;
@@ -100,17 +103,17 @@ public class KitList extends WorldSavedData {
 		}
 		if(!exist) {
 			
-			kitlist.add(k);
+			this.kitlist.add(k);
 			markDirty();
 		}
 	}
 	
 	public Kit getKit(String kitname) {
 		
-		for(int i = 0; i < kitlist.size(); i ++) {
-			if(kitlist.get(i).getName().equals(kitname)) {
+		for(int i = 0; i < this.kitlist.size(); i ++) {
+			if(this.kitlist.get(i).getName().equals(kitname)) {
 				
-				return kitlist.get(i);
+				return this.kitlist.get(i);
 			}
 		}
 		return null;
@@ -118,9 +121,9 @@ public class KitList extends WorldSavedData {
 	
 	public Kit getKit(BlockPos pos) {
 		
-		for(int i = 0; i< kitlist.size(); i++) {
+		for(int i = 0; i< this.kitlist.size(); i++) {
 			
-			Kit k = kitlist.get(i);
+			Kit k = this.kitlist.get(i);
 			if(pos.getX() == k.getX() && pos.getY() == k.getY() && pos.getZ() == k.getZ()) {
 				
 				return k;
@@ -130,7 +133,7 @@ public class KitList extends WorldSavedData {
 	}
 	
 	public List<Kit> getKitlist() {
-		return kitlist;
+		return this.kitlist;
 	}
 	
 	public void markDirty() {
