@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.KitList;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -40,8 +41,13 @@ public class KitDeleteCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		// TODO Auto-generated method stub
-
+		
+		if(args.length > 0) {
+			if(KitList.getKit(args[0]) != null) {
+				
+				KitList.removeKit(args[0]);
+			}
+		}
 	}
 
 	@Override

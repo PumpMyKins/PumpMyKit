@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
@@ -20,7 +19,7 @@ public class KitList extends WorldSavedData {
 	}
 	
 	
-	private List<Kit> kitlist;
+	private static List<Kit> kitlist;
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -67,18 +66,6 @@ public class KitList extends WorldSavedData {
 		return null;
 	}
 	
-	public static KitList loadKit(World w) {
-		
-		KitList data = (KitList)w.getMapStorage().getOrLoadData(KitList.class, MainKit.getKitlistKey());
-		if(data == null) {
-			
-			data = new KitList();
-			w.getMapStorage().setData(MainKit.getKitlistKey(), data);
-		}
-		
-		return data;
-	}
-	
 	public void removeKit(Kit k) {
 		
 		for(int i = 0; i < kitlist.size(); i ++) {
@@ -87,6 +74,16 @@ public class KitList extends WorldSavedData {
 				kitlist.remove(i);
 				markDirty();
 				break;
+			}
+		}
+	}
+	
+	public void removeKit(String name) {
+		
+		for(int i = 0; i < kitlist.size(); i ++) {
+			if(kitlist.get(i).getName().equals(name)) {
+				
+				kitlist.remove(i);
 			}
 		}
 	}

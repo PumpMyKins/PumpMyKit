@@ -1,5 +1,7 @@
 package fr.pumpmykins.kit;
 
+import java.util.List;
+
 import org.apache.logging.log4j.Logger;
 
 import fr.pumpmykins.kit.command.KitAddCommand;
@@ -36,6 +38,8 @@ public class MainKit {
 	
 	private static final String KITLIST_KEY = MODID+"_kitlist";
 	
+	private List<Kit> kitlist;
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
@@ -69,7 +73,7 @@ public class MainKit {
 		event.registerServerCommand(new KitReloadCommand());
 		event.registerServerCommand(new KitModifyCommand());
 		
-		//KitList.loadKit();
+		KitList.loadKit();
 	}
 
 	public static MainKit getInstance() {
