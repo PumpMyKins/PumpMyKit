@@ -16,6 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -60,6 +61,10 @@ public class KitAddCommand implements ICommand {
 			
 			if(args.length > 0) {
 				
+				if(player.dimension != 0) { //TODO Temporary v1
+					return;
+				}
+				
 				String kitname = args[0];
 				System.out.println(kitname);
 				BlockPos chest_pos = player.getPosition();
@@ -82,6 +87,7 @@ public class KitAddCommand implements ICommand {
 					chest_pos = chest_pos.north();
 				}
 				World w = player.getEntityWorld();
+			
 				IBlockState chest = Blocks.CHEST.getDefaultState();
 				IBlockState bedrock = Blocks.BARRIER.getDefaultState();
 				
