@@ -14,25 +14,25 @@ public class KitViewCommand implements ICommand {
 
 	@Override
 	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return "kitview";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
+		
 		return "kit.syntax.view";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
+		
 		return Lists.newArrayList("kv");
 	}
 
@@ -50,13 +50,13 @@ public class KitViewCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

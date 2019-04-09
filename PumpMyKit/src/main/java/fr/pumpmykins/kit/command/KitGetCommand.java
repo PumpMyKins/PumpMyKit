@@ -17,30 +17,30 @@ public class KitGetCommand implements ICommand {
 	
 	public KitGetCommand(KitList kitlistinstance) {
 		
-		this.kitlist = kitlistinstance;
+		this.setKitlist(kitlistinstance);
 	}
 
 	@Override
 	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return "kit";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
+		
 		return "kit.syntax.help";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
+		
 		return Lists.newArrayList("k");
 	}
 
@@ -66,6 +66,20 @@ public class KitGetCommand implements ICommand {
 	public boolean isUsernameIndex(String[] args, int index) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/**
+	 * @return the kitlist
+	 */
+	public KitList getKitlist() {
+		return kitlist;
+	}
+
+	/**
+	 * @param kitlist the kitlist to set
+	 */
+	public void setKitlist(KitList kitlist) {
+		this.kitlist = kitlist;
 	}
 
 }

@@ -16,25 +16,25 @@ public class KitReloadCommand implements ICommand {
 
 	@Override
 	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return "kitreload";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
+		
 		return "kit.syntax.reload";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
+		
 		return Lists.newArrayList("kr");
 	}
 
@@ -55,13 +55,13 @@ public class KitReloadCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
