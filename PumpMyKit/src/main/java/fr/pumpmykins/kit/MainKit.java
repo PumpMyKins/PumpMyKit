@@ -57,16 +57,17 @@ public class MainKit {
 		
 		this.setKitlistinstance(new KitList());
 		
-		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitViewCommand());
-		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitBuyCommand());
 		event.registerServerCommand(new KitEndBuyCommand());
 		event.registerServerCommand(new KitReloadCommand());
+		
 		event.registerServerCommand(new KitModifyCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitValidCommand(this.kitlistinstance));
-			
+		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
+		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));	
+		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
+	
 	}
 
 	public static MainKit getInstance() {
