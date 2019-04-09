@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -56,7 +57,9 @@ public class KitDeleteCommand implements ICommand {
 				
 				kitlist.removeKit(args[0]);
 				
-				BlockPos chest_pos = new BlockPos(kitlist.getKit(args[0]).getX(), kitlist.getKit(args[0]).getY(), kitlist.getKit(args[0]).getZ());
+				Kit k = kitlist.getKit(args[0]);
+				
+				BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 				
 				World w = server.getWorld(1);
 				
