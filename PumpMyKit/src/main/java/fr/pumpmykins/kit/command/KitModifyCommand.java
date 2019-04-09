@@ -4,13 +4,17 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitModifyCommand implements ICommand {
@@ -24,32 +28,55 @@ public class KitModifyCommand implements ICommand {
 
 	@Override
 	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return "kitmodify";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
+		
 		return "kit.syntax.modify";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
+		
 		return Lists.newArrayList("km");
 	}
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		// TODO Auto-generated method stub
-
+		
+		if(sender instanceof EntityPlayer) {
+			
+			EntityPlayer player = (EntityPlayer) sender;
+			
+			if(args.length > 0) {
+		
+				if(kitlist.getKit(args[0]) != null) {
+				
+					World w = server.getWorld(1);
+					
+					Kit k = kitlist.getKit(args[0]);
+					
+					BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
+					
+					w.setBlockToAir(chest_pos.north());
+					w.setBlockToAir(chest_pos.east());
+					w.setBlockToAir(chest_pos.west());
+					w.setBlockToAir(chest_pos.south());
+					w.setBlockToAir(chest_pos.down());
+					w.setBlockToAir(chest_pos.up());
+				
+				}
+			}
+		}
 	}
 
 	@Override

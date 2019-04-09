@@ -4,13 +4,17 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitValidCommand implements ICommand {
@@ -23,32 +27,56 @@ public class KitValidCommand implements ICommand {
 
 	@Override
 	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		
 		return "kitvalid";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
+		
 		return "kit.syntax.valid";
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
+		
 		return Lists.newArrayList("kv");
 	}
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		// TODO Auto-generated method stub
-
+		
+		if(sender instanceof EntityPlayer) {
+			
+			EntityPlayer player = (EntityPlayer) sender;
+			
+			if(args.length > 0) {
+		
+				if(kitlist.getKit(args[0]) != null) {
+				
+					World w = server.getWorld(1);
+					
+					Kit k = kitlist.getKit(args[0]);
+					
+					BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
+					IBlockState bedrock = Blocks.BARRIER.getDefaultState();
+					
+					w.setBlockState(chest_pos.north(), bedrock);
+					w.setBlockState(chest_pos.east(), bedrock);
+					w.setBlockState(chest_pos.west(), bedrock);
+					w.setBlockState(chest_pos.south(), bedrock);
+					w.setBlockState(chest_pos.down(), bedrock);
+					w.setBlockState(chest_pos.up(), bedrock);
+				
+				}
+			}
+		}
 	}
 
 	@Override
