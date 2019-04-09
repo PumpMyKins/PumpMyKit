@@ -2,6 +2,8 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import fr.pumpmykins.kit.KitList;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -28,19 +30,19 @@ public class KitValidCommand implements ICommand {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "kitvalid";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
 		// TODO Auto-generated method stub
-		return null;
+		return "kit.syntax.valid";
 	}
 
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return null;
+		return Lists.newArrayList("kv");
 	}
 
 	@Override
