@@ -6,12 +6,10 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,11 +52,7 @@ public class KitModifyCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		
 		if(sender instanceof EntityPlayer) {
-			
-			EntityPlayer player = (EntityPlayer) sender;
-			
 			if(args.length > 0) {
-		
 				if(kitlist.getKit(args[0]) != null) {
 				
 					World w = server.getWorld(1);
