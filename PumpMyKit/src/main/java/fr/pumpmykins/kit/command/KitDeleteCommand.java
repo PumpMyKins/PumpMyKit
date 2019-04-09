@@ -15,6 +15,12 @@ import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitDeleteCommand implements ICommand {
 
+	private KitList kitlist;
+	
+	public KitDeleteCommand(KitList kitlistinstance) {
+		this.kitlist = kitlistinstance;
+	}
+
 	@Override
 	public int compareTo(ICommand o) {
 		// TODO Auto-generated method stub
@@ -43,9 +49,9 @@ public class KitDeleteCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		
 		if(args.length > 0) {
-			if(KitList.getKit(args[0]) != null) {
+			if(kitlist.getKit(args[0]) != null) {
 				
-				KitList.removeKit(args[0]);
+				kitlist.removeKit(args[0]);
 			}
 		}
 	}

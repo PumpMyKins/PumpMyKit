@@ -1,9 +1,12 @@
 package fr.pumpmykins.kit.command;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.Kit;
+import fr.pumpmykins.kit.KitList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -17,6 +20,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitAddCommand implements ICommand {
+
+	private KitList kitlist;
+	
+	public KitAddCommand(KitList kitlistinstance) {
+		this.kitlist = kitlistinstance;
+	}
 
 	@Override
 	public int compareTo(ICommand o) {
@@ -47,15 +56,15 @@ public class KitAddCommand implements ICommand {
 
 		if(sender instanceof EntityPlayer) {
 			
-			sender = (EntityPlayer) sender;
+			EntityPlayer player = (EntityPlayer) sender;
 			
 			if(args.length > 0) {
 				
 				String kitname = args[0];
 				System.out.println(kitname);
-				BlockPos chest_pos = sender.getPosition();
+				BlockPos chest_pos = player.getPosition();
 				
-				EnumFacing i = ((EntityPlayer) sender).getHorizontalFacing();
+				EnumFacing i = player.getHorizontalFacing();
 				if(i == EnumFacing.EAST)
 					chest_pos = chest_pos.east();
 				if(i == EnumFacing.WEST)
@@ -65,10 +74,25 @@ public class KitAddCommand implements ICommand {
 				else
 					chest_pos = chest_pos.north();
 				
-				World w = sender.getEntityWorld();
+				World w = player.getEntityWorld();
 				IBlockState chest = Blocks.CHEST.getDefaultState();
 				
 				w.setBlockState(chest_pos, chest);
+				
+				Kit k = new Kit();
+				k.setName(kitname);
+				k.setCreator(player.getUniqueID());
+				k.setLast_updator(player.getUniqueID());
+				
+				Date date= new Date();
+				String a = date.toString();
+				
+				k.setLast_update(a);
+				k.setX(chest_pos.getX());
+				k.setY(chest_pos.getY());
+				k.setZ(chest_pos.getZ());
+				
+				this.kitlist.addKit(k);
 			}
 			else {
 				getUsage(sender);
