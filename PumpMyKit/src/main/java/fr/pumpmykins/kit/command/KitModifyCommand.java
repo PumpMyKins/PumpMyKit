@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.KitList;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -13,6 +14,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitModifyCommand implements ICommand {
+
+	private KitList kitlist;
+	
+	public KitModifyCommand(KitList kitlistinstance) {
+		
+		this.kitlist = kitlistinstance;
+	}
 
 	@Override
 	public int compareTo(ICommand o) {

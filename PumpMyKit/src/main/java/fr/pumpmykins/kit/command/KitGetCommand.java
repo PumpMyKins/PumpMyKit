@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.KitList;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -11,6 +12,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
 public class KitGetCommand implements ICommand {
+
+	private KitList kitlist;
+	
+	public KitGetCommand(KitList kitlistinstance) {
+		
+		this.kitlist = kitlistinstance;
+	}
 
 	@Override
 	public int compareTo(ICommand o) {
