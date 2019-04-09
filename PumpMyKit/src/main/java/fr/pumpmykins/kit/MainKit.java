@@ -32,13 +32,16 @@ public class MainKit {
 	
 	public static Logger logger;
 	
-	public static final String MODID = "pmkkit";
+	private static final String MODID = "pmkkit";
+	
+	private static final String KITLIST_KEY = MODID+"_kitlist";
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		logger = event.getModLog();
 		proxy.preInit(event.getSuggestedConfigurationFile());
+		
 	}
 	
 	@EventHandler
@@ -51,6 +54,7 @@ public class MainKit {
 		PermissionAPI.registerNode("kit.buy.start", DefaultPermissionLevel.OP, "Allow OP to give a Kit to someone");
 		PermissionAPI.registerNode("kit.modify", DefaultPermissionLevel.OP, "Allow OP to modify a Kit");
 		PermissionAPI.registerNode("kit.reload", DefaultPermissionLevel.OP, "Allow OP to reload the Kit list");
+		
 	}
 	
 	@EventHandler
@@ -64,6 +68,32 @@ public class MainKit {
 		event.registerServerCommand(new KitEndBuyCommand());
 		event.registerServerCommand(new KitReloadCommand());
 		event.registerServerCommand(new KitModifyCommand());
+		
+		//KitList.loadKit();
+	}
+
+	public static MainKit getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(MainKit instance) {
+		MainKit.instance = instance;
+	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public static void setLogger(Logger logger) {
+		MainKit.logger = logger;
+	}
+
+	public static String getModid() {
+		return MODID;
+	}
+
+	public static String getKitlistKey() {
+		return KITLIST_KEY;
 	}
 	
 	
