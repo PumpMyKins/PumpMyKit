@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit.command;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -55,9 +56,16 @@ public class KitModifyCommand implements ICommand {
 			if(args.length > 0) {
 				if(kitlist.getKit(args[0]) != null) {
 				
-					World w = server.getWorld(1);
+					World w = server.getWorld(0);
 					
 					Kit k = kitlist.getKit(args[0]);
+					
+					Date date = new Date();
+					k.setLast_update(date.toString());
+					k.setLast_updator(((EntityPlayer) sender).getUniqueID());
+					
+					kitlist.removeKit(kitlist.getKit(args[0]));
+					kitlist.addKit(k);
 					
 					BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 					
@@ -67,6 +75,8 @@ public class KitModifyCommand implements ICommand {
 					w.setBlockToAir(chest_pos.south());
 					w.setBlockToAir(chest_pos.down());
 					w.setBlockToAir(chest_pos.up());
+					
+					((EntityPlayer) sender).setPosition(k.getX()-2, k.getY(), k.getZ());
 				
 				}
 			}

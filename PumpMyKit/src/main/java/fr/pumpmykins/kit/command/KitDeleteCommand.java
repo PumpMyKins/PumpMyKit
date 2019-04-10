@@ -53,13 +53,11 @@ public class KitDeleteCommand implements ICommand {
 		if(args.length > 0) {
 			if(kitlist.getKit(args[0]) != null) {
 				
-				kitlist.removeKit(args[0]);
-				
 				Kit k = kitlist.getKit(args[0]);
 				
 				BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 				
-				World w = server.getWorld(1);
+				World w = server.getWorld(0);
 				
 				w.setBlockToAir(chest_pos);
 				w.setBlockToAir(chest_pos.north());
@@ -69,6 +67,7 @@ public class KitDeleteCommand implements ICommand {
 				w.setBlockToAir(chest_pos.down());
 				w.setBlockToAir(chest_pos.up());
 				
+				kitlist.removeKit(args[0]);
 			}
 		}
 	}
