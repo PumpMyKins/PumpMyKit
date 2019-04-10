@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit;
 
+import java.util.Date;
 import java.util.UUID;
 
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +17,48 @@ public class Kit {
 	private UUID last_updator;
 	private UUID creator;
 	
-	static Kit createKit(UUID creator, BlockPos chest_location, String kitname) {
+	public Kit(UUID creator, BlockPos chest_location, String kitname) {
+		
+		Date d = new Date();
+		
+		this.name = kitname;
+		this.creator = creator;
+		this.last_updator = creator;
+		this.last_update = d.toString();
+		this.x = chest_location.getX();
+		this.y = chest_location.getY();
+		this.z = chest_location.getZ();
+		
+	}
+	
+	public Kit(UUID creator, BlockPos chest_location, String kitname, UUID last_updator) {
+		
+		Date d = new Date();
+		
+		this.name = kitname;
+		this.creator = creator;
+		this.last_updator = last_updator;
+		this.last_update = d.toString();
+		this.x = chest_location.getX();
+		this.y = chest_location.getY();
+		this.z = chest_location.getZ();
+		
+	}
+	
+	public Kit(UUID creator, BlockPos chest_location, String kitname, UUID last_updator, String date) {
+		
+		this.name = kitname;
+		this.creator = creator;
+		this.last_updator = creator;
+		this.last_update = date;
+		this.x = chest_location.getX();
+		this.y = chest_location.getY();
+		this.z = chest_location.getZ();
+		
+	}
+	
+	
+	/*static Kit createKit(UUID creator, BlockPos chest_location, String kitname) {
 		
 		Kit k = new Kit();
 		
@@ -30,7 +72,7 @@ public class Kit {
 		k.setName(kitname);
 		
 		return k;
-	}
+	}*/
 
 	public String getName() {
 		return name;

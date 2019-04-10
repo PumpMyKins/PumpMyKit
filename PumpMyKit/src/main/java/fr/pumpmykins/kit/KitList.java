@@ -2,6 +2,7 @@ package fr.pumpmykins.kit;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -31,18 +32,19 @@ public class KitList extends WorldSavedData {
 		for(int i =0; i < kit_list.tagCount(); i++) {
 			
 			NBTTagCompound tmp_nbt = kit_list.getCompoundTagAt(i);
-			Kit tmp_k = new Kit();
 			
-			tmp_k.setName(tmp_nbt.getString("name"));
+			String name = tmp_nbt.getString("name");
+			UUID creator = tmp_nbt.getUniqueId("creator");
+			UUID last_updator = tmp_nbt.getUniqueId("last_updator");
+			String date = tmp_nbt.getString("last_update");
 			
-			tmp_k.setCreator(tmp_nbt.getUniqueId("creator"));
+			int x = tmp_nbt.getInteger("x");
+			int y = tmp_nbt.getInteger("y");
+			int z = tmp_nbt.getInteger("z");
 			
-			tmp_k.setLast_updator(tmp_nbt.getUniqueId("last_updator"));
-			tmp_k.setLast_update(tmp_nbt.getString("last_update"));
+			BlockPos chest_pos = new BlockPos(x,y,z);
 			
-			tmp_k.setX(tmp_nbt.getInteger("x"));
-			tmp_k.setY(tmp_nbt.getInteger("y"));
-			tmp_k.setZ(tmp_nbt.getInteger("z"));
+			Kit tmp_k = new Kit(creator, chest_pos, name, last_updator, date);
 			
 			this.kitlist.add(tmp_k);
 		}

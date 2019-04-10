@@ -1,6 +1,5 @@
 package fr.pumpmykins.kit.command;
 
-import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -100,18 +99,7 @@ public class KitAddCommand implements ICommand {
 				w.setBlockState(chest_pos.down(), bedrock);
 				w.setBlockState(chest_pos.up(), bedrock);
 				
-				Kit k = new Kit();
-				k.setName(kitname);
-				k.setCreator(player.getUniqueID());
-				k.setLast_updator(player.getUniqueID());
-				
-				Date date= new Date();
-				String a = date.toString();
-				
-				k.setLast_update(a);
-				k.setX(chest_pos.getX());
-				k.setY(chest_pos.getY());
-				k.setZ(chest_pos.getZ());
+				Kit k = new Kit(player.getUniqueID(), chest_pos, kitname);
 				
 				this.kitlist.addKit(k);
 			}
