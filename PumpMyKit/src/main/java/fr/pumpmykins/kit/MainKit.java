@@ -3,6 +3,8 @@ package fr.pumpmykins.kit;
 import org.apache.logging.log4j.Logger;
 
 import fr.pumpmykins.kit.command.*;
+import net.minecraft.world.World;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -14,7 +16,7 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 
-@Mod(useMetadata= true, modid = "pmkkit")
+@Mod(useMetadata=true, modid = "pmkkit")
 public class MainKit {
 
 	@Instance("pmkkit")
@@ -55,21 +57,43 @@ public class MainKit {
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
-		this.setKitlistinstance(new KitList());
+		this.kitlistinstance = getData(event.getServer().getWorld(0));
 		
-		event.registerServerCommand(new KitViewCommand());
 		event.registerServerCommand(new KitBuyCommand());
 		event.registerServerCommand(new KitEndBuyCommand());
-		event.registerServerCommand(new KitReloadCommand());
 		
+		event.registerServerCommand(new KitViewCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitModifyCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitValidCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));	
 		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
 	
+		
+		
 	}
 
+	public static KitList getData(World w) {
+		
+		MapStorage storage = w.getMapStorage();
+		KitList instance = (KitList) storage.getOrLoadData(KitList.class, KITLIST_KEY);
+		if(instance == null) {
+			instance = new KitList();
+			storage.setData(KITLIST_KEY, instance);
+		}
+		return instance;
+	}
+	
+	public static void setData(World w) {
+		
+		MapStorage storage = w.getMapStorage();
+		KitList instance = (KitList) storage.getOrLoadData(KitList.class, KITLIST_KEY);
+		if(instance.isDirty()) {
+			storage.setData(KITLIST_KEY, instance);
+		}
+	}
+	
+	
 	public static MainKit getInstance() {
 		return instance;
 	}
