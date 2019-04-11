@@ -67,5 +67,6 @@
 	<classpathentry kind="lib" path="C:/Users/loulo/.gradle/caches/minecraft/deobfedDeps/compileDummy.jar"/>
 	<classpathentry kind="lib" path="C:/Users/loulo/.gradle/caches/minecraft/deobfedDeps/providedDummy.jar"/>
 	<classpathentry kind="lib" path="C:/Users/loulo/.gradle/caches/minecraft/net/minecraftforge/forge/1.12.2-14.23.5.2768/start"/>
+	<classpathentry kind="lib" path="D:/Bureau/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
