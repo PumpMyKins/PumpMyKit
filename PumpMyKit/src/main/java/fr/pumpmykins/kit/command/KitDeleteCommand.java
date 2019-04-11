@@ -51,9 +51,9 @@ public class KitDeleteCommand implements ICommand {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		
 		if(args.length > 0) {
-			if(kitlist.getKit(args[0]) != null) {
+			if(this.kitlist.getKit(args[0]) != null) {
 				
-				Kit k = kitlist.getKit(args[0]);
+				Kit k = this.kitlist.getKit(args[0]);
 				
 				BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 				
@@ -67,7 +67,7 @@ public class KitDeleteCommand implements ICommand {
 				w.setBlockToAir(chest_pos.down());
 				w.setBlockToAir(chest_pos.up());
 				
-				kitlist.removeKit(args[0]);
+				this.kitlist.removeKit(args[0]);
 			}
 		}
 	}
