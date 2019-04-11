@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit.command;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,6 +9,7 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.KitUtils;
 import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -84,59 +86,69 @@ public class KitGetCommand implements ICommand {
 					}
 				} else {
 					
-					Kit k = kitlist.getKit(args[0]);
-					
-					World w = server.getWorld(0);
-					
-					BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
-					
-					TileEntity te = w.getTileEntity(chest_pos);
-						
-					IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-										
-					int inventorySpace = 0;
-					int kitsize = 0;
-					
-					List<ItemStack> lis = player.inventory.mainInventory;
-					List<Integer> emptySlot = new ArrayList<Integer>();
-					
-					for(int i = 0; i < 36; i++) {
-						
-						ItemStack is = lis.get(i);
-						if(is.isEmpty()) {
+					try {
+						if(KitUtils.getKitUse(player , args[0]) > 0) {
 							
-							inventorySpace++;
-							emptySlot.add(i);
-						}
-					}
-					
-					for(int i = 0; i < ih.getSlots(); i++) {
-						
-						ItemStack is = ih.getStackInSlot(i);
-						if(!is.isEmpty()) {
+							KitUtils.kitUse(player, args[0]);
 							
-							kitsize++;
-						}
-					}
-					
-					Iterator<Integer> emptySl = emptySlot.iterator();
-					
-					if(inventorySpace < kitsize) {
-						
-						for(int i = 0; i < ih.getSlots(); i++) {
+							Kit k = kitlist.getKit(args[0]);
+							
+							World w = server.getWorld(0);
+							
+							BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
+							
+							TileEntity te = w.getTileEntity(chest_pos);
 								
-							ItemStack is = ih.getStackInSlot(i);
-							if(!is.isEmpty()) {
-								player.entityDropItem(is, 0F);
+							IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+												
+							int inventorySpace = 0;
+							int kitsize = 0;
+							
+							List<ItemStack> lis = player.inventory.mainInventory;
+							List<Integer> emptySlot = new ArrayList<Integer>();
+							
+							for(int i = 0; i < 36; i++) {
+								
+								ItemStack is = lis.get(i);
+								if(is.isEmpty()) {
+									
+									inventorySpace++;
+									emptySlot.add(i);
+								}
+							}
+							
+							for(int i = 0; i < ih.getSlots(); i++) {
+								
+								ItemStack is = ih.getStackInSlot(i);
+								if(!is.isEmpty()) {
+									
+									kitsize++;
+								}
+							}
+							
+							Iterator<Integer> emptySl = emptySlot.iterator();
+							
+							if(inventorySpace < kitsize) {
+								
+								for(int i = 0; i < ih.getSlots(); i++) {
+										
+									ItemStack is = ih.getStackInSlot(i);
+									if(!is.isEmpty()) {
+										player.entityDropItem(is, 0F);
+									}
+								}
+							} else {
+								for(int i = 0; i < ih.getSlots(); i++) {
+									
+									if(!ih.getStackInSlot(i).isEmpty())
+										player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i));
+									
+								}
 							}
 						}
-					} else {
-						for(int i = 0; i < ih.getSlots(); i++) {
-							
-							if(!ih.getStackInSlot(i).isEmpty())
-								player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i));
-							
-						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}

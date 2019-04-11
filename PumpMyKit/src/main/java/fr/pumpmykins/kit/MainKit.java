@@ -72,7 +72,7 @@ public class MainKit {
 					
 			System.out.println("§aMySQL connection success.");
 			//BASE DE DONNER
-			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` INT NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(16) NOT NULL ,`used` BOOLEAN,PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` INT NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(16) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
 		}
 		
 	}
