@@ -47,6 +47,7 @@ public class KitList extends WorldSavedData {
 			Kit tmp_k = new Kit(creator, chest_pos, name, last_updator, date);
 			
 			this.kitlist.add(tmp_k);
+			
 		}
 	}
 
@@ -55,7 +56,7 @@ public class KitList extends WorldSavedData {
 		
 		NBTTagList kit_list = new NBTTagList();
 		for(Kit k : this.kitlist) {
-			
+		
 			NBTTagCompound tmp = new NBTTagCompound();
 			tmp.setString("name", k.getName());
 			tmp.setUniqueId("creator", k.getCreator());
@@ -68,7 +69,7 @@ public class KitList extends WorldSavedData {
 			kit_list.appendTag(tmp);
 		}
 		compound.setTag(MainKit.getKitlistKey(), kit_list);
-		return null;
+		return compound;
 	}
 	
 	public void removeKit(Kit k) {
@@ -89,6 +90,7 @@ public class KitList extends WorldSavedData {
 			if(this.kitlist.get(i).getName().equals(name)) {
 				
 				this.kitlist.remove(i);
+				markDirty();
 			}
 		}
 	}
