@@ -22,7 +22,6 @@ public class MainKit {
 	@Instance("pmkkit")
 	public static MainKit instance;
 	
-	@SidedProxy(clientSide = "fr.pumpmykins.kit.KitClient", serverSide ="fr.pumpmykins.kit.KitServer")	
 	public static Logger logger;
 	
 	private static final String MODID = "pmkkit";
