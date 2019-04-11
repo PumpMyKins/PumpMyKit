@@ -58,14 +58,16 @@ public class KitModifyCommand implements ICommand {
 				
 					World w = server.getWorld(0);
 					
-					Kit k = kitlist.getKit(args[0]);
+					Kit k = this.kitlist.getKit(args[0]);
 					
 					Date date = new Date();
 					k.setLast_update(date.toString());
 					k.setLast_updator(((EntityPlayer) sender).getUniqueID());
 					
-					kitlist.removeKit(kitlist.getKit(args[0]));
-					kitlist.addKit(k);
+					this.kitlist.removeKit(kitlist.getKit(args[0]));
+					this.kitlist.addKit(k);
+					
+					this.kitlist.markDirty();
 					
 					BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 					

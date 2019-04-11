@@ -46,7 +46,7 @@ public class KitValidCommand implements ICommand {
 	@Override
 	public List<String> getAliases() {
 		
-		return Lists.newArrayList("kv");
+		return Lists.newArrayList("kvalid");
 	}
 
 	@Override
@@ -54,13 +54,11 @@ public class KitValidCommand implements ICommand {
 		
 		if(sender instanceof EntityPlayer) {
 			
-			EntityPlayer player = (EntityPlayer) sender;
-			
 			if(args.length > 0) {
 		
 				if(kitlist.getKit(args[0]) != null) {
 				
-					World w = server.getWorld(1);
+					World w = server.getWorld(0);
 					
 					Kit k = kitlist.getKit(args[0]);
 					
