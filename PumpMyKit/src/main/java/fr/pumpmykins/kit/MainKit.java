@@ -22,9 +22,7 @@ public class MainKit {
 	@Instance("pmkkit")
 	public static MainKit instance;
 	
-	@SidedProxy(clientSide = "fr.pumpmykins.kit.KitClient", serverSide ="fr.pumpmykins.kit.KitServer")
-	public static KitCommon proxy;
-	
+	@SidedProxy(clientSide = "fr.pumpmykins.kit.KitClient", serverSide ="fr.pumpmykins.kit.KitServer")	
 	public static Logger logger;
 	
 	private static final String MODID = "pmkkit";
@@ -37,14 +35,12 @@ public class MainKit {
 	public void preInit(FMLPreInitializationEvent event) {
 		
 		logger = event.getModLog();
-		proxy.preInit(event.getSuggestedConfigurationFile());
 		
 	}
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		
-		proxy.init();
 		PermissionAPI.registerNode("kit.add", DefaultPermissionLevel.OP, "Allow OP to add a Kit");
 		PermissionAPI.registerNode("kit.delete", DefaultPermissionLevel.OP, "Allow OP to delete a Kit");
 		PermissionAPI.registerNode("kit.buy.end", DefaultPermissionLevel.OP, "Allow OP to end the duration of a Kit");
