@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import fr.pumpmykins.kit.util.KitUtils;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -40,16 +41,21 @@ public class KitBuyCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		// TODO Auto-generated method stub
-
+		
+		if(args.length > 2) {
+			
+			KitUtils.add(args[0], args[1], args[2]);
+			System.out.println("Kit :"+args[2]+", buyBy :"+args[1]+", ID D'achat :"+args[0]);
+		}
 	}
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
 		if(sender instanceof EntityPlayer) {
 			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.buy.start");
+		} else {
+			return true;
 		}
-		return false;
 	}
 
 	@Override

@@ -89,4 +89,17 @@ public class KitUtils {
 		
 		sql.update("UPDATE "+tableName+" SET used = '0' WHERE buyId = '"+buyId+"'");
 	}
+	
+	public static void add(String buyId, String username, String kitname) {
+		
+		sql.update("INSERT INTO "+tableName+"(buyId, username, kitname) VALUES ('"
+				+buyId
+				+"','"
+				+username
+				+"','"
+				+kitname
+				+"')");
+		
+	}
+	
 }

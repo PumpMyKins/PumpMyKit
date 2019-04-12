@@ -87,6 +87,7 @@ public class KitGetCommand implements ICommand {
 				} else {
 					
 					try {
+						
 						if(KitUtils.getKitUse(player , args[0]) > 0) {
 							
 							KitUtils.kitUse(player, args[0]);
