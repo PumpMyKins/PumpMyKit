@@ -21,7 +21,7 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 
-@Mod(useMetadata=true, modid = "pmkkit")
+@Mod(useMetadata=true, modid = "pmkkit", acceptableRemoteVersions="*")
 public class MainKit {
 
 	@Instance("pmkkit")
