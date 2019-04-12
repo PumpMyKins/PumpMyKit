@@ -57,7 +57,8 @@ public class MainKit {
 		PermissionAPI.registerNode("kit.buy.end", DefaultPermissionLevel.OP, "Allow OP to end the duration of a Kit");
 		PermissionAPI.registerNode("kit.buy.start", DefaultPermissionLevel.OP, "Allow OP to give a Kit to someone");
 		PermissionAPI.registerNode("kit.modify", DefaultPermissionLevel.OP, "Allow OP to modify a Kit");
-		PermissionAPI.registerNode("kit.reload", DefaultPermissionLevel.OP, "Allow OP to reload the Kit list");
+		PermissionAPI.registerNode("kit.admin", DefaultPermissionLevel.OP, "Basic Admin Permission for the Mod");
+		
 		
 		this.host = ModConfig.host;
 		this.username = ModConfig.username;
@@ -72,7 +73,7 @@ public class MainKit {
 					
 			System.out.println("§aMySQL connection success.");
 			//BASE DE DONNER
-			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` INT NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(16) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
 		}
 		
 	}
@@ -84,6 +85,7 @@ public class MainKit {
 		
 		event.registerServerCommand(new KitBuyCommand());
 		event.registerServerCommand(new KitEndBuyCommand());
+		event.registerServerCommand(new KitHelpCommand());
 		
 		event.registerServerCommand(new KitViewCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitModifyCommand(this.kitlistinstance));

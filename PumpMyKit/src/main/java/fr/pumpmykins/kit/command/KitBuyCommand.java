@@ -5,12 +5,15 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.util.KitUtils;
+import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitBuyCommand implements ICommand {
@@ -30,7 +33,7 @@ public class KitBuyCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 	
-		return "kit.syntax.buy";
+		return "/kitbuy <kitname> <username> <buyId>";
 	}
 
 	@Override
@@ -46,6 +49,12 @@ public class KitBuyCommand implements ICommand {
 			
 			KitUtils.add(args[0], args[1], args[2]);
 			System.out.println("Kit :"+args[2]+", buyBy :"+args[1]+", ID D'achat :"+args[0]);
+			
+			if(sender instanceof EntityPlayer) {
+				ITextComponent init = new TextComponentString("Achat du Kit :"+args[2]+", Pour :"+args[1]);
+				init.setStyle(PmkStyleTable.orangeBold());
+				sender.sendMessage(init);
+			}
 		}
 	}
 

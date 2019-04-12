@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -15,6 +16,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -41,7 +45,7 @@ public class KitAddCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.add";
+		return "/kitadd <kitname>";
 	}
 
 	@Override
@@ -66,6 +70,7 @@ public class KitAddCommand implements ICommand {
 				String kitname = args[0];
 				
 				if(this.kitlist.getKit(kitname) == null) {
+					
 					BlockPos chest_pos = player.getPosition();
 					
 					EnumFacing i = player.getHorizontalFacing();
@@ -105,11 +110,13 @@ public class KitAddCommand implements ICommand {
 					this.kitlist.addKit(k);
 				} else {
 					
-					//TODO kitexist
+					ITextComponent init = new TextComponentString("Le kit : "+kitname+" existe deja !");
+					init.setStyle(PmkStyleTable.orangeBold());
+					player.sendMessage(init);
 				}
 			}
 			else {
-				getUsage(sender);
+				sender.sendMessage(new TextComponentTranslation("kit.syntax"));
 			}
 		}
 		

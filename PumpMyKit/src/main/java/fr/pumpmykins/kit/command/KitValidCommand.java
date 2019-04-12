@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -14,6 +15,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -40,7 +43,7 @@ public class KitValidCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.valid";
+		return "/kitvalid <kitname>";
 	}
 
 	@Override
@@ -72,6 +75,9 @@ public class KitValidCommand implements ICommand {
 					w.setBlockState(chest_pos.down(), bedrock);
 					w.setBlockState(chest_pos.up(), bedrock);
 				
+					ITextComponent init = new TextComponentString("Kit reprotégé avec succès");
+					init.setStyle(PmkStyleTable.orangeBold());
+					sender.sendMessage(init);
 				}
 			}
 		}

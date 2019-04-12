@@ -6,12 +6,15 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -38,7 +41,7 @@ public class KitDeleteCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.delete";
+		return "/kitdelete <kitname>";
 	}
 
 	@Override
@@ -68,6 +71,11 @@ public class KitDeleteCommand implements ICommand {
 				w.setBlockToAir(chest_pos.up());
 				
 				this.kitlist.removeKit(args[0]);
+				
+				ITextComponent init = new TextComponentString("Vous venez de supprimer le kit :"+k.getName());
+				init.setStyle(PmkStyleTable.orangeBold());
+				sender.sendMessage(init);
+				
 			}
 		}
 	}

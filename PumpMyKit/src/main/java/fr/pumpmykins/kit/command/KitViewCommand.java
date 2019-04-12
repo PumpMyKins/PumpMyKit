@@ -45,7 +45,7 @@ public class KitViewCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.view";
+		return "/kitview <kitname>";
 	}
 	
 	@Override
@@ -97,6 +97,11 @@ public class KitViewCommand implements ICommand {
 						}
 					}
 					
+				} else {
+					
+					ITextComponent init = new TextComponentString("Le kit n'existe pas !");
+					init.setStyle(PmkStyleTable.orangeBold());
+					sender.sendMessage(init);
 				}
 			}
 		}

@@ -7,12 +7,15 @@ import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.server.permission.PermissionAPI;
 
@@ -40,7 +43,7 @@ public class KitModifyCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.modify";
+		return "/kitmodify <kitname>";
 	}
 
 	@Override
@@ -80,6 +83,10 @@ public class KitModifyCommand implements ICommand {
 					
 					((EntityPlayer) sender).setPosition(k.getX()-2, k.getY(), k.getZ());
 				
+					ITextComponent init = new TextComponentString("Protection du kit effectuer avec succès, n'oublier pas de faire /kvalid <kitname> après !");
+					init.setStyle(PmkStyleTable.orangeBold());
+					sender.sendMessage(init);
+					
 				}
 			}
 		}

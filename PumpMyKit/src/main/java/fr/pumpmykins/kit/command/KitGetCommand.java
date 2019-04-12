@@ -49,7 +49,7 @@ public class KitGetCommand implements ICommand {
 	@Override
 	public String getUsage(ICommandSender sender) {
 		
-		return "kit.syntax.help";
+		return "/kit <kitname> or /kit list";
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class KitGetCommand implements ICommand {
 								
 								for(int i = 0; i < ih.getSlots(); i++) {
 										
-									ItemStack is = ih.getStackInSlot(i);
+									ItemStack is = ih.getStackInSlot(i).copy();
 									if(!is.isEmpty()) {
 										player.entityDropItem(is, 0F);
 									}
@@ -142,13 +142,23 @@ public class KitGetCommand implements ICommand {
 								for(int i = 0; i < ih.getSlots(); i++) {
 									
 									if(!ih.getStackInSlot(i).isEmpty())
-										player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i));
+										player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i).copy());
 									
 								}
 							}
+							
+							ITextComponent init = new TextComponentString("Vous venez de recevoir le kit :");
+							init.setStyle(PmkStyleTable.orangeBold());
+							
+							ITextComponent kitname = new TextComponentString(args[0]);
+							kitname.setStyle(PmkStyleTable.itemNumber());
+							init.appendSibling(kitname);
+							
+							player.sendMessage(init);
+							
 						}
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}

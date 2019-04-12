@@ -64,17 +64,12 @@ public class KitUtils {
 		if(getKitUse(player, kitname) > 0) {
 			
 			ResultSet rs = sql.getResult("SELECT * FROM "+tableName+" WHERE (kitname = '" + kitname + "') AND (username = '"+player.getName() +"')");
-			if(!rs.getBoolean("used")) {
-				
-				use(rs.getString("buyId"));
-			} else {
-				while(rs.next()) {
-					
-					if(rs.getBoolean("used")) {
-						
-						use(rs.getString("buyId"));
-						break;
-					}
+			while(rs.next()) {	
+				if(rs.getBoolean("used"))
+					continue;
+				else {
+					use(rs.getString("buyId"));
+					break;
 				}
 			}
 		}
