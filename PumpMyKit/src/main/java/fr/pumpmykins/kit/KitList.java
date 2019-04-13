@@ -140,9 +140,4 @@ public class KitList extends WorldSavedData {
 		return this.kitlist;
 	}
 	
-	public void markDirty() {
-		
-		this.setDirty(true);
-	}
-	
 }
