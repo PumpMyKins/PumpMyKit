@@ -28,6 +28,7 @@ public class Kit {
 		this.x = chest_location.getX();
 		this.y = chest_location.getY();
 		this.z = chest_location.getZ();		
+		
 	}
 	
 	public Kit(UUID creator, BlockPos chest_location, String kitname, UUID last_updator) {
