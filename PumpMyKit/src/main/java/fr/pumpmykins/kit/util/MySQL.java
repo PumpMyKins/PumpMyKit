@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.Executors;
-
 
 public class MySQL {
 
@@ -110,7 +108,6 @@ public class MySQL {
 				this.conn = DriverManager.getConnection(
 						"jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true",
 						this.username, this.password);
-				this.conn.setNetworkTimeout(Executors.newFixedThreadPool(1), -1);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
