@@ -83,7 +83,7 @@ public class KitModifyCommand implements ICommand {
 					
 					((EntityPlayer) sender).setPosition(k.getX()-2, k.getY(), k.getZ());
 				
-					ITextComponent init = new TextComponentString("Protection du kit effectuer avec succès, n'oublier pas de faire /kvalid <kitname> après !");
+					ITextComponent init = new TextComponentString("Protection du kit enlever avec succes, n'oublier pas de faire /kvalid <kitname> apres !");
 					init.setStyle(PmkStyleTable.orangeBold());
 					sender.sendMessage(init);
 					
