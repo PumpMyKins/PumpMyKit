@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit.command;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -47,11 +48,15 @@ public class KitBuyCommand implements ICommand {
 		
 		if(args.length > 2) {
 			
-			KitUtils.add(args[0], args[1], args[2]);
+			try {
+				KitUtils.add(args[0], args[1], args[2]);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			System.out.println("Kit :"+args[2]+", buyBy :"+args[1]+", ID D'achat :"+args[0]);
 			
 			if(sender instanceof EntityPlayer) {
-				ITextComponent init = new TextComponentString("Achat du Kit :"+args[2]+", Pour :"+args[1]);
+				ITextComponent init = new TextComponentString("Ajout du Kit :"+args[2]+", Pour :"+args[1]);
 				init.setStyle(PmkStyleTable.orangeBold());
 				sender.sendMessage(init);
 			}

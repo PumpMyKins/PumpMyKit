@@ -1,5 +1,7 @@
 package fr.pumpmykins.kit;
 
+import java.sql.SQLException;
+
 import org.apache.logging.log4j.Logger;
 
 import fr.pumpmykins.kit.command.*;
@@ -58,6 +60,9 @@ public class MainKit {
 		PermissionAPI.registerNode("kit.buy.start", DefaultPermissionLevel.OP, "Allow OP to give a Kit to someone");
 		PermissionAPI.registerNode("kit.modify", DefaultPermissionLevel.OP, "Allow OP to modify a Kit");
 		PermissionAPI.registerNode("kit.admin", DefaultPermissionLevel.OP, "Basic Admin Permission for the Mod");
+		PermissionAPI.registerNode("rank.tier1", DefaultPermissionLevel.OP, "rank tier 1");
+		PermissionAPI.registerNode("rank.tier2", DefaultPermissionLevel.OP, "rank tier 2");
+		PermissionAPI.registerNode("rank.tier3", DefaultPermissionLevel.OP, "rank tier 3");
 		
 		
 		this.host = ModConfig.host;
@@ -70,10 +75,14 @@ public class MainKit {
 		mySQL = new MySQL(credentials);
 		mySQL.openConnection();
 		if(mySQL.isConnected()) {
-					
+			
 			System.out.println("§aMySQL connection success.");
 			//BASE DE DONNER
 			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS RandomKit(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
+
+			
+			mySQL.closeConnection();
 		}
 		
 	}
@@ -93,6 +102,8 @@ public class MainKit {
 		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
 		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));	
 		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
+		event.registerServerCommand(new KitRandomCommand(this.kitlistinstance));
+		
 	
 		
 		
@@ -123,7 +134,7 @@ public class MainKit {
 		
 		@Config.Name("Database")
 		@Config.Comment({"The MySQL database to login"})
-		public static String database ="PmkKit_Database";
+		public static String database ="PumpMyKit";
 		
 		@Config.Name("Port")
 		@Config.Comment({"The MySQL Port of your server"})
@@ -186,8 +197,16 @@ public class MainKit {
 		this.kitlistinstance = kitlistinstance;
 	}
 
-	public static MySQL getMySQL() {
-		return mySQL;
+	public static MySQL getMySQL() throws SQLException {
+		if(mySQL.isConnected()) {
+			return mySQL;
+		} else {
+			mySQL.refreshConnection();
+			if(mySQL.isConnected()) {
+				return mySQL;
+			}
+		}
+		return null;
 	}
 
 	public static void setMySQL(MySQL mySQL) {

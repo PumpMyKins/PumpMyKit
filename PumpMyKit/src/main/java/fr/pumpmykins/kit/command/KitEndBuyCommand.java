@@ -41,7 +41,11 @@ public class KitEndBuyCommand implements ICommand {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		// TODO Auto-generated method stub
-
+		/**Will have to be done for the global type kit
+		 * Will also have to add a var to the Kit Class in order to setup properly
+		 * what kit should and shouldn't be give to everyone
+		 * Since we use a mod we could also imagine a Kit Team by using the team from FTBUtilities 
+		 */
 	}
 
 	@Override

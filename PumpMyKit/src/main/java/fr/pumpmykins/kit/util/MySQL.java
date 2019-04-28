@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class MySQL {
@@ -90,19 +92,26 @@ public class MySQL {
 	}
 
 	public boolean isConnected() {
-		return this.conn != null;
+		try {
+			if(this.conn != null && !(this.conn.isClosed()))
+				return true;
+			else
+				return false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public void openConnection() {
 		if (!isConnected()) {
 			try {
-				System.out.println(this.host);
-				System.out.println(this.port);
-				System.out.println(this.database);
-				System.out.println(this.username);
+				
 				this.conn = DriverManager.getConnection(
 						"jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true",
 						this.username, this.password);
+				this.conn.setNetworkTimeout(Executors.newFixedThreadPool(1), -1);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -115,6 +124,7 @@ public class MySQL {
 				try {
 					
 					this.conn.close();
+				
 				} catch (SQLException e) {
 					
 					e.printStackTrace();
@@ -123,7 +133,20 @@ public class MySQL {
 		}
 	}
 
-
+	public void refreshConnection() throws SQLException {
+		
+		if(this.conn.isClosed()) {
+			
+			this.conn = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true",
+						this.username, this.password);
+		} else {
+			
+			this.conn.close();
+			
+			refreshConnection();
+		}
+	}
+	
 	public ResultSet getResult(String query) {
 		if (isConnected()) {
 			try {
@@ -144,10 +167,13 @@ public class MySQL {
 
 				PreparedStatement pst = conn.prepareStatement(query);
 				pst.executeUpdate();
+				
 			} catch (SQLException e) {
 
 				e.printStackTrace();
 			}
 		}
 	}
+	
+	
 }

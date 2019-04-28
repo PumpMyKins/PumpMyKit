@@ -10,12 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class KitUtils {
 
-	public static MySQL sql = MainKit.getMySQL();
 	public static String tableName = "PmkKitTable";
 	
 	public static int getKitUse(EntityPlayer player, String kitname) throws SQLException {
 		
 		int use = 0;
+		
+		MySQL sql = MainKit.getMySQL();
 		
 		ResultSet rs = sql.getResult("SELECT * FROM "+tableName+" WHERE (kitname = '" + kitname + "') AND (username = '"+player.getName() +"')");
 		if(rs.first()) {
@@ -34,6 +35,7 @@ public class KitUtils {
 	public static Map<String, Integer> getAllKitUse(EntityPlayer player) throws SQLException{
 		
 		Map<String, Integer> hm = new HashMap<>();
+		MySQL sql = MainKit.getMySQL();
 		
 		ResultSet rs = sql.getResult("SELECT * FROM "+tableName+" WHERE (username = '"+player.getName() +"')");
 		
@@ -63,6 +65,8 @@ public class KitUtils {
 		
 		if(getKitUse(player, kitname) > 0) {
 			
+			MySQL sql = MainKit.getMySQL();
+			
 			ResultSet rs = sql.getResult("SELECT * FROM "+tableName+" WHERE (kitname = '" + kitname + "') AND (username = '"+player.getName() +"')");
 			while(rs.next()) {	
 				if(rs.getBoolean("used"))
@@ -75,18 +79,21 @@ public class KitUtils {
 		}
 	}
 	
-	public static void use(String buyId) {
+	public static void use(String buyId) throws SQLException {
 		
+		MySQL sql = MainKit.getMySQL();
 		sql.update("UPDATE "+tableName+" SET used = '1' WHERE buyId = '"+buyId+"'");
 	}
 	
-	public static void unUse(String buyId) {
+	public static void unUse(String buyId) throws SQLException {
 		
+		MySQL sql = MainKit.getMySQL();
 		sql.update("UPDATE "+tableName+" SET used = '0' WHERE buyId = '"+buyId+"'");
 	}
 	
-	public static void add(String buyId, String username, String kitname) {
+	public static void add(String buyId, String username, String kitname) throws SQLException {
 		
+		MySQL sql = MainKit.getMySQL();
 		sql.update("INSERT INTO "+tableName+"(buyId, username, kitname) VALUES ('"
 				+buyId
 				+"','"
