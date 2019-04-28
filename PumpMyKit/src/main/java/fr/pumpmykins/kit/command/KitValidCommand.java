@@ -75,7 +75,7 @@ public class KitValidCommand implements ICommand {
 					w.setBlockState(chest_pos.down(), bedrock);
 					w.setBlockState(chest_pos.up(), bedrock);
 				
-					ITextComponent init = new TextComponentString("Kit reprotégé avec succès");
+					ITextComponent init = new TextComponentString("Kit reprotege avec succes");
 					init.setStyle(PmkStyleTable.orangeBold());
 					sender.sendMessage(init);
 				}
