@@ -104,6 +104,9 @@ public class KitViewCommand implements ICommand {
 					sender.sendMessage(init);
 				}
 			}
+		} else {
+			
+			
 		}
 	}
 
