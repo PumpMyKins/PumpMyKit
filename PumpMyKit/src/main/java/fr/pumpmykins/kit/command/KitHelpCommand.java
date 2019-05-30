@@ -3,47 +3,19 @@ package fr.pumpmykins.kit.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
+import fr.pumpmykins.kit.util.ISubCommand;
 import fr.pumpmykins.kit.util.PmkStyleTable;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitHelpCommand implements ICommand {
+public class KitHelpCommand extends ISubCommand {
 
 	@Override
-	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return "kithelp";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-		// TODO Auto-generated method stub
-		return "/kithelp (Give all the kit command)";
-	}
-
-	@Override
-	public List<String> getAliases() {
-		// TODO Auto-generated method stub
-		return Lists.newArrayList("kh");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 		
 		List<ITextComponent> message = new ArrayList<ITextComponent>();
 		
@@ -55,7 +27,7 @@ public class KitHelpCommand implements ICommand {
 		getCommand.setStyle(PmkStyleTable.itemList());
 		message.add(getCommand);
 		
-		ITextComponent viewCommand = new TextComponentString("/kitview <kitname> (Affiche les items du kit)");
+		ITextComponent viewCommand = new TextComponentString("/kit view <kitname> (Affiche les items du kit)");
 		viewCommand.setStyle(PmkStyleTable.itemList());
 		message.add(viewCommand);
 		
@@ -92,22 +64,8 @@ public class KitHelpCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+	public List<String> getPermission() {
 		
-		return true;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
-
 		return null;
 	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-
-		return false;
-	}
-
 }

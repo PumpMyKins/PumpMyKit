@@ -2,13 +2,10 @@ package fr.pumpmykins.kit.command;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.ISubCommand;
 import fr.pumpmykins.kit.util.PmkStyleTable;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,41 +18,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class KitViewCommand implements ICommand {
+public class KitViewCommand extends ISubCommand {
 	
 	private KitList kitlist;
-	
+
 	public KitViewCommand(KitList kitlistinstance) {
-		
 		this.kitlist = kitlistinstance;
 	}
 
 	@Override
-	public int compareTo(ICommand o) {
-		
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		
-		return "kitview";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-		
-		return "/kitview <kitname>";
-	}
-	
-	@Override
-	public List<String> getAliases() {
-		
-		return Lists.newArrayList("kview");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 		
 		if(args.length > 0) {
 			
@@ -111,21 +83,9 @@ public class KitViewCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return true;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
+	public List<String> getPermission() {
 		
 		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-		
-		return false;
 	}
 
 }

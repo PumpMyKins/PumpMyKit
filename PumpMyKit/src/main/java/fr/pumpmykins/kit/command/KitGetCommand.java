@@ -1,25 +1,20 @@
 package fr.pumpmykins.kit.command;
 
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import com.google.common.collect.Lists;
+import java.util.Optional;
 
 import fr.pumpmykins.kit.Kit;
-import fr.pumpmykins.kit.KitList;
-import fr.pumpmykins.kit.MainKit;
 import fr.pumpmykins.kit.util.KitUtils;
-import fr.pumpmykins.kit.util.MySQL;
 import fr.pumpmykins.kit.util.PmkStyleTable;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
+
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -29,278 +24,117 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitGetCommand implements ICommand {
+public class KitGetCommand {
 
-	private KitList kitlist;
+	public KitGetCommand(ICommandSender sender, Kit k) throws SQLException {
+		
+		EntityPlayer player = (EntityPlayer) sender;
+		
+		if(KitUtils.getKitUse(player , k.getName()).size() > 0) {
 
-	public KitGetCommand(KitList kitlistinstance) {
+			KitUtils.useKit(player, k.getName());
+	
+			World w = sender.getServer().getWorld(0);
+			
+			BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
 
-		this.setKitlist(kitlistinstance);
-	}
+			TileEntity te = w.getTileEntity(chest_pos);
 
-	@Override
-	public int compareTo(ICommand o) {
+			IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		return 0;
-	}
+			int inventorySpace = 0;
+			int kitsize = 0;
 
-	@Override
-	public String getName() {
+			List<ItemStack> lis = player.inventory.mainInventory;
+			List<Integer> emptySlot = new ArrayList<Integer>();
 
-		return "kit";
-	}
+			for(int i = 0; i < 36; i++) {
 
-	@Override
-	public String getUsage(ICommandSender sender) {
+				ItemStack is = lis.get(i);
+				if(is.isEmpty()) {
 
-		return "/kit <kitname> or /kit list";
-	}
-
-	@Override
-	public List<String> getAliases() {
-
-		return Lists.newArrayList("k");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-
-		if(sender instanceof EntityPlayer) {
-
-			EntityPlayer player = (EntityPlayer) sender;
-
-
-
-			if(kitlist.getKit(args[0]) == null || args[0] == "list") {
-
-				ITextComponent init = new TextComponentString("Liste des Kits : ");
-				init.setStyle(PmkStyleTable.orangeBold());
-
-				sender.sendMessage(init);
-
-				for(Kit k : kitlist.getKitlist()) {
-
-					ITextComponent item = new TextComponentString(k.getName());
-					item.setStyle(PmkStyleTable.itemList());
-					sender.sendMessage(item);
-
+					inventorySpace++;
+					emptySlot.add(i);
 				}
-			} else if(PermissionAPI.hasPermission(player, "rank.tier1") || PermissionAPI.hasPermission(player, "rank.tier3") || PermissionAPI.hasPermission(player, "rank.tier2")) {
+			}
+			for(int i = 0; i < ih.getSlots(); i++) {
 
+				ItemStack is = ih.getStackInSlot(i);
+				if(!is.isEmpty()) {
 
-				MySQL mySQL;
-				try {
-					mySQL = MainKit.getMySQL();
-					ResultSet rs = mySQL.getResult("SELECT * FROM selectKit WHERE `user_uuid` = '"+player.getUniqueID()+"'");
+					kitsize++;
+				}
+			}
 
-					if(!rs.first()) {
+			if(inventorySpace < kitsize) {
 
-						mySQL.update("INSERT INTO `selectKit` (`user_uuid`, `kitnum`) VALUES ('"
-								+player.getUniqueID()
-								+"',"
-								+0
-								+")");
-					} else {
+				for(int i = 0; i < ih.getSlots(); i++) {
 
-						rs.first();
-						int kitnum = rs.getInt("kitnum");
-
-						int selectRestriction = 0;
-						if(PermissionAPI.hasPermission(player, "rank.tier1"))
-							selectRestriction = 1;
-						if(PermissionAPI.hasPermission(player, "rank.tier2"))
-							selectRestriction = 3;
-						if(PermissionAPI.hasPermission(player, "rank.tier3"))
-							selectRestriction = 5;
-						int selectCount = selectRestriction - kitnum;
-
-						if(selectCount > 0) {
-
-							ITextComponent init = new TextComponentString("Liste des Kits que vous pouvez selectionner dans le cadre de votre tier: ");
-							init.setStyle(PmkStyleTable.orangeBold());
-
-							sender.sendMessage(init);
-
-							for(Kit k : kitlist.getKitlist()) {
-
-								ITextComponent item = new TextComponentString(k.getName());
-								item.setStyle(PmkStyleTable.kitSelect(k.getName()));
-
-								sender.sendMessage(item);
-							}
-						}
+					ItemStack is = ih.getStackInSlot(i).copy();
+					if(!is.isEmpty()) {
+						player.entityDropItem(is, 0F);
 					}
-				} catch(SQLException e) {
-					e.printStackTrace();
 				}
-
-			} else if(args.length < 1) {
-
-				server.commandManager.executeCommand(sender, "/kithelp");
 			} else {
+				
+				Iterator<Integer> emptySl = emptySlot.iterator();
+				
+				for(int i = 0; i < ih.getSlots(); i++) {
+
+					if(!ih.getStackInSlot(i).isEmpty())
+						player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i).copy());
+
+				}
+			}
+
+			ITextComponent init = new TextComponentString("Vous venez de recevoir le kit : ");
+			init.setStyle(PmkStyleTable.orangeBold());
+
+			ITextComponent kitname = new TextComponentString(k.getName());
+			kitname.setStyle(PmkStyleTable.itemNumber());
+			init.appendSibling(kitname);
+
+			player.sendMessage(init);
+		} else {
+
+			ITextComponent kitname = new TextComponentString("Vous n'avez pas le kit "+k.getName());
+			kitname.setStyle(PmkStyleTable.orangeBold());
+			player.sendMessage(kitname);
+			
+			if(PermissionAPI.hasPermission(player, "rank.tier1") || PermissionAPI.hasPermission(player, "rank.tier3") || PermissionAPI.hasPermission(player, "rank.tier2")) {
+
 				try {
 
-					if(KitUtils.getKitUse(player , args[0]) > 0) {
+					Optional<Integer> kitnum = KitUtils.getSelectUse(player.getUniqueID());
 
-						KitUtils.kitUse(player, args[0]);
+					if(!kitnum.isPresent()) {
 
-						Kit k = kitlist.getKit(args[0]);
+						kitnum = Optional.of(0);
+					}
 
-						World w = server.getWorld(0);
 
-						BlockPos chest_pos = new BlockPos(k.getX(), k.getY(), k.getZ());
+					int selectRestriction = 0;
+					if(PermissionAPI.hasPermission(player, "rank.tier1"))
+						selectRestriction = 1;
+					if(PermissionAPI.hasPermission(player, "rank.tier2"))
+						selectRestriction = 3;
+					if(PermissionAPI.hasPermission(player, "rank.tier3"))
+						selectRestriction = 5;
+					int selectCount = selectRestriction - kitnum.get();
 
-						TileEntity te = w.getTileEntity(chest_pos);
+					if(selectCount > 0) {
 
-						IItemHandler ih = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-
-						int inventorySpace = 0;
-						int kitsize = 0;
-
-						List<ItemStack> lis = player.inventory.mainInventory;
-						List<Integer> emptySlot = new ArrayList<Integer>();
-
-						for(int i = 0; i < 36; i++) {
-
-							ItemStack is = lis.get(i);
-							if(is.isEmpty()) {
-
-								inventorySpace++;
-								emptySlot.add(i);
-							}
-						}
-
-						for(int i = 0; i < ih.getSlots(); i++) {
-
-							ItemStack is = ih.getStackInSlot(i);
-							if(!is.isEmpty()) {
-
-								kitsize++;
-							}
-						}
-
-						Iterator<Integer> emptySl = emptySlot.iterator();
-
-						if(inventorySpace < kitsize) {
-
-							for(int i = 0; i < ih.getSlots(); i++) {
-
-								ItemStack is = ih.getStackInSlot(i).copy();
-								if(!is.isEmpty()) {
-									player.entityDropItem(is, 0F);
-								}
-							}
-						} else {
-							for(int i = 0; i < ih.getSlots(); i++) {
-
-								if(!ih.getStackInSlot(i).isEmpty())
-									player.inventory.mainInventory.set(emptySl.next(), ih.getStackInSlot(i).copy());
-
-							}
-						}
-
-						ITextComponent init = new TextComponentString("Vous venez de recevoir le kit : ");
+						ITextComponent init = new TextComponentString("Dans le cadre de votre Tier il vous reste "+selectCount+" kit gratuit à selectionner !");
 						init.setStyle(PmkStyleTable.orangeBold());
 
-						ITextComponent kitname = new TextComponentString(args[0]);
-						kitname.setStyle(PmkStyleTable.itemNumber());
-						init.appendSibling(kitname);
+						sender.sendMessage(init);
 
-						player.sendMessage(init);
 
-					} else {
-
-						if(PermissionAPI.hasPermission(player, "rank.tier1") || PermissionAPI.hasPermission(player, "rank.tier3") || PermissionAPI.hasPermission(player, "rank.tier2")) {
-
-							MySQL mySQL = MainKit.getMySQL();
-							ResultSet rs = mySQL.getResult("SELECT * FROM selectKit WHERE `user_uuid` = '"+player.getUniqueID()+"'");
-
-							if(!rs.first()) {
-
-								mySQL.update("INSERT INTO `selectKit` (`user_uuid`, `kitnum`) VALUES ('"
-										+player.getUniqueID()
-										+"',"
-										+0
-										+")");
-							} else {
-
-								rs.first();
-								int kitnum = rs.getInt("kitnum");
-
-								int selectRestriction = 0;
-								if(PermissionAPI.hasPermission(player, "rank.tier1"))
-									selectRestriction = 1;
-								if(PermissionAPI.hasPermission(player, "rank.tier2"))
-									selectRestriction = 3;
-								if(PermissionAPI.hasPermission(player, "rank.tier3"))
-									selectRestriction = 5;
-								int selectCount = selectRestriction - kitnum;
-
-								if(selectCount > 0) {
-
-									ITextComponent init = new TextComponentString("Liste des Kits que vous pouvez selectionner dans le cadre de votre tier: ");
-									init.setStyle(PmkStyleTable.orangeBold());
-
-									sender.sendMessage(init);
-
-									for(Kit k : kitlist.getKitlist()) {
-
-										ITextComponent item = new TextComponentString(k.getName());
-										item.setStyle(PmkStyleTable.kitSelect(k.getName()));
-
-										sender.sendMessage(item);
-
-									}
-
-								}
-
-							}
-
-						} else {
-
-							ITextComponent kitname = new TextComponentString("Vous n'avez pas le kit "+args[0]);
-							kitname.setStyle(PmkStyleTable.orangeBold());
-							player.sendMessage(kitname);
-						}
 					}
-				} catch (SQLException e) {
-
+				} catch(SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-
-	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return true;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
-
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-
-		return false;
-	}
-
-	/**
-	 * @return the kitlist
-	 */
-	public KitList getKitlist() {
-		return kitlist;
-	}
-
-	/**
-	 * @param kitlist the kitlist to set
-	 */
-	public void setKitlist(KitList kitlist) {
-		this.kitlist = kitlist;
-	}
-
 }

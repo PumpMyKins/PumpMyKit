@@ -1,57 +1,29 @@
 package fr.pumpmykins.kit.command;
 
+import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.ISubCommand;
 import fr.pumpmykins.kit.util.PmkStyleTable;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitDeleteCommand implements ICommand {
+public class KitDeleteCommand extends ISubCommand {
 
 	private KitList kitlist;
-	
+
 	public KitDeleteCommand(KitList kitlistinstance) {
 		this.kitlist = kitlistinstance;
 	}
 
 	@Override
-	public int compareTo(ICommand o) {
-		
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-
-		return "kitdelete";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-		
-		return "/kitdelete <kitname>";
-	}
-
-	@Override
-	public List<String> getAliases() {
-		
-		return Lists.newArrayList("kd");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 		
 		if(args.length > 0) {
 			if(this.kitlist.getKit(args[0]) != null) {
@@ -81,24 +53,9 @@ public class KitDeleteCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		if(sender instanceof EntityPlayer) {
-			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.delete");
-		}
-		return false;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
-		
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-		
-		return false;
+	public List<String> getPermission() {
+		// TODO Auto-generated method stub
+		return Arrays.asList("rank.staff.responsable");
 	}
 
 }

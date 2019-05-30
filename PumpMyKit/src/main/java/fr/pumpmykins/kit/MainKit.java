@@ -1,10 +1,20 @@
 package fr.pumpmykins.kit;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
 
-import fr.pumpmykins.kit.command.*;
+import fr.pumpmykins.kit.command.KitAddCommand;
+import fr.pumpmykins.kit.command.KitBuyCommand;
+import fr.pumpmykins.kit.command.KitDeleteCommand;
+import fr.pumpmykins.kit.command.KitHelpCommand;
+import fr.pumpmykins.kit.command.KitListCommand;
+import fr.pumpmykins.kit.command.KitModifyCommand;
+import fr.pumpmykins.kit.command.KitRandomCommand;
+import fr.pumpmykins.kit.command.KitSelectCommand;
+import fr.pumpmykins.kit.command.KitValidCommand;
+import fr.pumpmykins.kit.command.KitViewCommand;
 import fr.pumpmykins.kit.util.MySQL;
 import fr.pumpmykins.kit.util.MySQL.MySQLCredentials;
 import net.minecraft.world.World;
@@ -44,6 +54,12 @@ public class MainKit {
 	public String database = "";
 	public int port = 3306;
 	
+	public String servername ="";
+	
+	public static String BUYTABLE = "";
+	public static String KITRANDOMTABLE = "";
+	public static String KITSELECTTABLE = "";
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		
@@ -51,63 +67,77 @@ public class MainKit {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		
-		PermissionAPI.registerNode("kit.add", DefaultPermissionLevel.OP, "Allow OP to add a Kit");
-		PermissionAPI.registerNode("kit.delete", DefaultPermissionLevel.OP, "Allow OP to delete a Kit");
-		PermissionAPI.registerNode("kit.buy.end", DefaultPermissionLevel.OP, "Allow OP to end the duration of a Kit");
-		PermissionAPI.registerNode("kit.buy.start", DefaultPermissionLevel.OP, "Allow OP to give a Kit to someone");
-		PermissionAPI.registerNode("kit.modify", DefaultPermissionLevel.OP, "Allow OP to modify a Kit");
-		PermissionAPI.registerNode("kit.admin", DefaultPermissionLevel.OP, "Basic Admin Permission for the Mod");
+		PermissionAPI.registerNode("rank.staff.responsable", DefaultPermissionLevel.OP, "Allow the management of the Mod");
 		PermissionAPI.registerNode("rank.tier1", DefaultPermissionLevel.OP, "rank tier 1");
 		PermissionAPI.registerNode("rank.tier2", DefaultPermissionLevel.OP, "rank tier 2");
 		PermissionAPI.registerNode("rank.tier3", DefaultPermissionLevel.OP, "rank tier 3");
 		
 		
-		this.host = ModConfig.host;
-		this.username = ModConfig.username;
-		this.password = ModConfig.password;
-		this.database = ModConfig.database;
-		this.port = ModConfig.port;
+		this.host = ModConfig.sqlConfig.host;
+		this.username = ModConfig.sqlConfig.username;
+		this.password = ModConfig.sqlConfig.password;
+		this.database = ModConfig.sqlConfig.database;
+		this.port = ModConfig.sqlConfig.port;
 		
-		MySQLCredentials credentials = new MySQLCredentials(host, port, username, password, database);
+		
+		this.servername = ModConfig.serverconfig.servername;
+		
+		this.BUYTABLE = ModConfig.serverconfig.buyTable;
+		this.KITRANDOMTABLE = ModConfig.serverconfig.randomTable;
+		this.KITSELECTTABLE = ModConfig.serverconfig.selectTable;
+		
+		if(ModConfig.serverconfig.globalbuy)
+			this.BUYTABLE = this.BUYTABLE.concat(this.servername);
+		if(ModConfig.serverconfig.globalrandom)
+			this.KITRANDOMTABLE = this.KITRANDOMTABLE.concat(this.servername);
+		if(ModConfig.serverconfig.globalselect)
+			this.KITSELECTTABLE = this.KITSELECTTABLE.concat(this.servername);
+			
+		MySQLCredentials credentials = new MySQLCredentials(this.host, this.port, this.username, this.password, this.database);
 		mySQL = new MySQL(credentials);
 		mySQL.openConnection();
 		if(mySQL.isConnected()) {
 			
 			System.out.println("§aMySQL connection success.");
 			//BASE DE DONNER
-			mySQL.update("CREATE TABLE IF NOT EXISTS PmkKitTable( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
-			mySQL.update("CREATE TABLE IF NOT EXISTS RandomKit(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
-			mySQL.update("CREATE TABLE IF NOT EXISTS selectKit(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.BUYTABLE+"( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.KITRANDOMTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
+			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.KITSELECTTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
 
+		} else {
 			
-			mySQL.closeConnection();
+			
 		}
-		
 	}
 	
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
 		this.kitlistinstance = getData(event.getServer().getWorld(0));
+		/**
+		*
+		* event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
+		* event.registerServerCommand(new KitRandomCommand(this.kitlistinstance));
+		*
+		**/
 		
-		event.registerServerCommand(new KitBuyCommand());
-		event.registerServerCommand(new KitEndBuyCommand());
-		event.registerServerCommand(new KitHelpCommand());
+		event.registerServerCommand(new KitCommand(this.kitlistinstance));
 		
-		event.registerServerCommand(new KitViewCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitModifyCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitValidCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitAddCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitDeleteCommand(this.kitlistinstance));	
-		event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitRandomCommand(this.kitlistinstance));
-		event.registerServerCommand(new KitSelectCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("help", "h"), new KitHelpCommand());
+		KitCommand.registerSubCommand(Arrays.asList("view", "v"), new KitViewCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("add", "a"), new KitAddCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("delete","d"), new KitDeleteCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("valid"), new KitValidCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("modify"), new KitModifyCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("select"), new KitSelectCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("random", "rand"), new KitRandomCommand(this.kitlistinstance));
+		KitCommand.registerSubCommand(Arrays.asList("list", "l"), new KitListCommand(this.kitlistinstance));
 		
-	
-		
+		KitCommand.registerSubCommand(Arrays.asList("buy"), new KitBuyCommand());
 		
 	}
 	
@@ -122,28 +152,65 @@ public class MainKit {
 	@Config(modid = MODID)
 	public static class ModConfig{
 		
-		@Config.Name("Hostname")
-		@Config.Comment({"The MySQL hostname to login (IP)"})
-		public static String host ="";
+		public static SqlConfig sqlConfig = new SqlConfig();
 		
-		@Config.Name("Username")
-		@Config.Comment({"The MySQL Username to login"})
-		public static String username ="";
+		public static ServerConfig serverconfig = new ServerConfig();
 		
-		@Config.Name("Password")
-		@Config.Comment({"The MySQL Password to login"})
-		public static String password ="";
+		public static class SqlConfig {
+			
+			@Config.Name("Hostname")
+			@Config.Comment({"The MySQL hostname to login (IP)"})
+			public String host ="";
+			
+			@Config.Name("Username")
+			@Config.Comment({"The MySQL Username to login"})
+			public String username ="";
+			
+			@Config.Name("Password")
+			@Config.Comment({"The MySQL Password to login"})
+			public String password ="";
+			
+			@Config.Name("Database")
+			@Config.Comment({"The MySQL database to login"})
+			public String database ="PumpMyKit";
+			
+			@Config.Name("Port")
+			@Config.Comment({"The MySQL Port of your server"})
+			public int port = 3306;
 		
-		@Config.Name("Database")
-		@Config.Comment({"The MySQL database to login"})
-		public static String database ="PumpMyKit";
+		}
 		
-		@Config.Name("Port")
-		@Config.Comment({"The MySQL Port of your server"})
-		public static int port = 3306;
+		public static class ServerConfig {
+			
+			@Config.Name("ServerName")
+			@Config.Comment({"The serveur name in order to make the difference between table !", "Only if Multiple server, if not let it be null ;)"})
+			public String servername = "";
+			
+			@Config.Name("buyTable")
+			@Config.Comment({"The name for the Sql table for kit buy"})
+			public String buyTable = "buyKit";
+			
+			@Config.Name("globalbuy")
+			@Config.Comment({"All the server should use the same table ?"})
+			public boolean globalbuy = false;
+			
+			@Config.Name("randomTable")
+			@Config.Comment({"The name for the Sql table for kit buy"})
+			public String randomTable = "randomKit";
+			
+			@Config.Name("globalrandom")
+			@Config.Comment({"All the server should use the same table ?"})
+			public boolean globalrandom = true;
+			
+			@Config.Name("selectTable")
+			@Config.Comment({"The name for the Sql table for kit buy"})
+			public String selectTable = "selectKit";
+			
+			@Config.Name("globalselect")
+			@Config.Comment({"All the server should use the same table ?"})
+			public boolean globalselect = false;
 		
-		
-		
+		}
 	}
 
 	public static KitList getData(World w) {
@@ -213,6 +280,30 @@ public class MainKit {
 
 	public static void setMySQL(MySQL mySQL) {
 		MainKit.mySQL = mySQL;
+	}
+
+	public String getBUYTABLE() {
+		return BUYTABLE;
+	}
+
+	public void setBUYTABLE(String bUYTABLE) {
+		BUYTABLE = bUYTABLE;
+	}
+
+	public String getKITRANDOMTABLE() {
+		return KITRANDOMTABLE;
+	}
+
+	public void setKITRANDOMTABLE(String kITRANDOMTABLE) {
+		KITRANDOMTABLE = kITRANDOMTABLE;
+	}
+
+	public static String getKITSELECTTABLE() {
+		return KITSELECTTABLE;
+	}
+
+	public void setKITSELECTTABLE(String kITSELECTTABLE) {
+		KITSELECTTABLE = kITSELECTTABLE;
 	}
 	
 	

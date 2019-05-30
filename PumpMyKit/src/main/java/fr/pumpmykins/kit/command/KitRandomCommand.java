@@ -1,29 +1,25 @@
 package fr.pumpmykins.kit.command;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
-
-import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
-import fr.pumpmykins.kit.MainKit;
-import fr.pumpmykins.kit.util.MySQL;
+import fr.pumpmykins.kit.util.ISubCommand;
+import fr.pumpmykins.kit.util.KitUtils;
 import fr.pumpmykins.kit.util.PmkStyleTable;
 
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitRandomCommand implements ICommand {
+public class KitRandomCommand extends ISubCommand {
 
 	private KitList kitlist;
 
@@ -33,39 +29,14 @@ public class KitRandomCommand implements ICommand {
 	}
 
 	@Override
-	public int compareTo(ICommand o) {
-
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-
-		return "kitrandom";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-
-		return "/kitrandom";
-	}
-
-	@Override
-	public List<String> getAliases() {
-
-		return Lists.newArrayList("kitrand");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 
 		if(sender instanceof EntityPlayer) {
 
 			try {
-				MySQL mySQL = MainKit.getMySQL();
-
+				
 				EntityPlayer player = (EntityPlayer) sender;
-				ResultSet rs = mySQL.getResult("SELECT * FROM RandomKit WHERE `user_uuid` = '"+player.getUniqueID()+"'");
+				Optional<Integer> kitnum = KitUtils.getRandomUse(player.getUniqueID());
 				int randomRestriction = 0;
 				if(PermissionAPI.hasPermission(player, "rank.tier1"))
 					randomRestriction = 1;
@@ -75,22 +46,14 @@ public class KitRandomCommand implements ICommand {
 					randomRestriction = 5;
 				int randomCount = randomRestriction;
 
-				int kitnum = 0;
+				if(kitnum.isPresent()) {
 
-				if(rs.first()) {
-
-					kitnum = rs.getInt("kitnum");
-
-					randomCount = randomCount - kitnum;
+					randomCount = randomCount - kitnum.get();
 
 				} else {
 
-					mySQL.update("INSERT INTO `RandomKit` (`user_uuid`, `kitnum`) VALUES ('"
-							+player.getUniqueID()
-							+"',"
-							+0
-							+")");
-
+					KitUtils.randomFirstUse(player.getUniqueID(), 0);
+					kitnum = Optional.of(0);
 				}
 
 				if(randomCount > 0) {
@@ -106,9 +69,9 @@ public class KitRandomCommand implements ICommand {
 
 					server.getCommandManager().executeCommand(server, "kitbuy "+buyId+" "+player.getName()+" "+k.getName());
 
-					int newnum = kitnum + 1 ;
+					int newnum = kitnum.get() + 1 ;
 
-					mySQL.update("UPDATE `RandomKit` SET `kitnum`="+newnum+" WHERE `user_uuid`= '"+player.getUniqueID()+"'");
+					KitUtils.setRandomUse(player.getUniqueID(), newnum);
 
 					ITextComponent init = new TextComponentString("Bravo vous avez maintenant acces au kit : ");
 					init.setStyle(PmkStyleTable.orangeBold());
@@ -132,27 +95,9 @@ public class KitRandomCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-
-		if(sender instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) sender;
-			if(PermissionAPI.hasPermission(player, "rank.tier1") || PermissionAPI.hasPermission(player, "rank.tier2") || PermissionAPI.hasPermission(player, "rank.tier3"))
-				return true;
-		}
-		return false;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
-
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-
-		return false;
+	public List<String> getPermission() {
+		// TODO Auto-generated method stub
+		return Arrays.asList("rank.tier1", "rank.tier2", "rank.tier3");
 	}
 
 
