@@ -5,6 +5,8 @@ import java.util.List;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
 import scala.actors.threadpool.Arrays;
 
@@ -36,7 +38,9 @@ public abstract class ISubCommand {
 				if(allow)
 					onCommand(server, sender, args);
 				else {
-					System.out.println("no permission");
+					ITextComponent permission = new TextComponentString("Vous n'avez pas la permission de faire cela");
+					permission.setStyle(PmkStyleTable.orangeBold());
+					sender.sendMessage(permission);
 				}
 					
 
