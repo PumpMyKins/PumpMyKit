@@ -23,36 +23,77 @@ public class KitHelpCommand extends ISubCommand {
 		init.setStyle(PmkStyleTable.orangeBold());
 		message.add(init);
 		
-		ITextComponent getCommand = new TextComponentString("/kit <kitname> ou /kit list (Commande pour obtenir un Kit)");
-		getCommand.setStyle(PmkStyleTable.itemList());
+		ITextComponent getCommand = new TextComponentString("/kit <kitname>");
+		ITextComponent getCommandbis = new TextComponentString(" (Commande pour obtenir un Kit)");
+		getCommand.setStyle(PmkStyleTable.importantInfo(" "));
+		getCommandbis.setStyle(PmkStyleTable.detailsInfo());
+		getCommand.appendSibling(getCommandbis);
 		message.add(getCommand);
 		
-		ITextComponent viewCommand = new TextComponentString("/kit view <kitname> (Affiche les items du kit)");
-		viewCommand.setStyle(PmkStyleTable.itemList());
+		ITextComponent listCommand = new TextComponentString("/kit list");
+		ITextComponent listCommandbis = new TextComponentString(" (Affiche la liste des kit)");
+		listCommand.setStyle(PmkStyleTable.importantInfo("list"));
+		listCommandbis.setStyle(PmkStyleTable.detailsInfo());
+		listCommand.appendSibling(listCommandbis);
+		message.add(listCommand);
+		
+		ITextComponent viewCommand = new TextComponentString("/kit view <kitname>");
+		ITextComponent viewCommandbis = new TextComponentString(" (Affiche les items du kit)");
+		viewCommand.setStyle(PmkStyleTable.importantInfo("view"));
+		viewCommandbis.setStyle(PmkStyleTable.detailsInfo());
+		viewCommand.appendSibling(viewCommandbis);
 		message.add(viewCommand);
+		
+		// TIER COMMAND
+		
+		if(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier1") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier2") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier3")) {
+			
+			ITextComponent randomCommand = new TextComponentString("/kit random");
+			ITextComponent randomCommandbis = new TextComponentString(" (Pour avoir accès à un kit Random !)");
+			randomCommand.setStyle(PmkStyleTable.importantInfo("random"));
+			randomCommandbis.setStyle(PmkStyleTable.detailsInfo());
+			randomCommand.appendSibling(randomCommandbis);
+			message.add(randomCommand);
+			
+			ITextComponent selectCommand = new TextComponentString("/kit select <kitname>");
+			ITextComponent selectCommandbis = new TextComponentString("(Vous donne accès au kit de votre choix !)");
+			selectCommand.setStyle(PmkStyleTable.importantInfo("select"));
+			selectCommandbis.setStyle(PmkStyleTable.detailsInfo());
+			selectCommand.appendSibling(selectCommandbis);
+			message.add(selectCommand);
+			
+		}
 		
 		// ADMIN COMMAND
 		
-		if(PermissionAPI.hasPermission((EntityPlayer) sender, "kit.admin")) {
+		if(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.responsable") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.modo") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.admin")) {
 		
-			ITextComponent modifyCommand = new TextComponentString("/kitmodify <kitname> (Permet d'aller modifier un kit)");
-			modifyCommand.setStyle(PmkStyleTable.itemList());
+			ITextComponent modifyCommand = new TextComponentString("/kit modify <kitname> ");
+			ITextComponent modifyCommandbis = new TextComponentString("(Permet d'aller modifier un kit)");
+			modifyCommand.setStyle(PmkStyleTable.importantInfo("modify"));
+			modifyCommandbis.setStyle(PmkStyleTable.detailsInfo());
+			modifyCommand.appendSibling(modifyCommandbis);
 			message.add(modifyCommand);
 			
-			ITextComponent validCommand = new TextComponentString("/kitvalid <kitname> (Permet de valider la modification d'un kit)");
-			validCommand.setStyle(PmkStyleTable.itemList());
+			ITextComponent validCommand = new TextComponentString("/kit valid <kitname> ");
+			ITextComponent validCommandbis = new TextComponentString("(Permet de valider la modification d'un kit)");
+			validCommand.setStyle(PmkStyleTable.importantInfo("valid"));
+			validCommand.setStyle(PmkStyleTable.detailsInfo());
+			validCommand.appendSibling(validCommandbis);
 			message.add(validCommand);
 			
-			ITextComponent addCommand = new TextComponentString("/kitadd <kitname> (Génère un coffre et l'enrégistre en temps que kit)");
-			addCommand.setStyle(PmkStyleTable.itemList());
+			ITextComponent addCommand = new TextComponentString("/kit add <kitname> ");
+			ITextComponent addCommandbis = new TextComponentString("(Génère un coffre et l'enrégistre en temps que kit)");
+			addCommand.setStyle(PmkStyleTable.importantInfo("add"));
+			addCommandbis.setStyle(PmkStyleTable.detailsInfo());
+			addCommand.appendSibling(addCommandbis);
 			message.add(addCommand);
 			
-			ITextComponent buyCommand = new TextComponentString("/kitbuy <kitname> <username> <buyId> (Only for funder)");
-			buyCommand.setStyle(PmkStyleTable.itemList());
-			message.add(buyCommand);
-			
-			ITextComponent deleteCommand = new TextComponentString("/kitdelete <kitname> (Supprime le kit)");
-			deleteCommand.setStyle(PmkStyleTable.itemList());
+			ITextComponent deleteCommand = new TextComponentString("/kit delete <kitname> ");
+			ITextComponent deleteCommandbis = new TextComponentString("(Supprime le kit)");
+			deleteCommand.setStyle(PmkStyleTable.importantInfo("delete"));
+			deleteCommandbis.setStyle(PmkStyleTable.detailsInfo());
+			deleteCommand.appendSibling(deleteCommandbis);
 			message.add(deleteCommand);
 		}
 		

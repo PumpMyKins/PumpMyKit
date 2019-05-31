@@ -22,6 +22,7 @@ public class KitBuyCommand extends ISubCommand {
 			
 			try {
 				KitUtils.add(args[0], args[1], args[2]);
+				System.out.println(args[0] + "<-- id, "+ args[1]+ "<-- username,"+ args[2] +"<-- kitname");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -36,7 +37,7 @@ public class KitBuyCommand extends ISubCommand {
 
 	@Override
 	public List<String> getPermission() {
-		// TODO Auto-generated method stub
+		
 		return Arrays.asList("rank.staff.responsable");
 	}
 	

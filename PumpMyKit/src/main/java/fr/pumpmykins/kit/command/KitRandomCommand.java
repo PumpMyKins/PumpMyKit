@@ -67,7 +67,7 @@ public class KitRandomCommand extends ISubCommand {
 					int random = rand.nextInt(100000);
 					buyId = buyId.concat(Integer.toString(random));
 
-					server.getCommandManager().executeCommand(server, "kitbuy "+buyId+" "+player.getName()+" "+k.getName());
+					server.getCommandManager().executeCommand(server, "kit buy "+buyId+" "+player.getName()+" "+k.getName());
 
 					int newnum = kitnum.get() + 1 ;
 

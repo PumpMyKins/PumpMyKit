@@ -77,7 +77,7 @@ public class KitSelectCommand extends ISubCommand {
 					String buyId = k.getName()+player.getName();
 					buyId = buyId.concat(Integer.toString(select));
 
-					server.getCommandManager().executeCommand(server, "kitbuy "+buyId+" "+player.getName()+" "+k.getName());
+					server.getCommandManager().executeCommand(server, "kit buy "+buyId+" "+player.getName()+" "+k.getName());
 
 					int newnum = kitnum.get() + 1 ;
 

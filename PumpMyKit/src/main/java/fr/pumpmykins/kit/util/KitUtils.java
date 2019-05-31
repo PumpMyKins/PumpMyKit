@@ -29,7 +29,7 @@ public class KitUtils {
 			do {
 				
 				if(!rs.getBoolean("used")) {
-					use.add(rs.getInt(""));
+					use.add(rs.getInt("id"));
 				}
 				
 			} while (rs.next());
@@ -43,13 +43,15 @@ public class KitUtils {
 		Map<String, Integer> hm = new HashMap<>();
 		MySQL sql = MainKit.getMySQL();
 		
-		ResultSet rs = sql.getResult("SELECT * FROM "+buyKitTable+" WHERE (username = '"+player.getName() +"')");
+		ResultSet rs = sql.getResult("SELECT * FROM "+buyKitTable+" WHERE (`username` ='"+player.getName()+"')");
 		
 		if(rs.first()) {
 			do {
-				if(rs.getBoolean("used")) {
+				
+				String kitname = rs.getString("kitname");
+				
+				if(!rs.getBoolean("used")) {
 					
-					String kitname = rs.getString("kitname");
 					if(hm.containsKey(kitname)) {
 						int use = hm.get(kitname);
 						use++;
@@ -74,9 +76,8 @@ public class KitUtils {
 		if(use.size() > 0) {
 			
 			MySQL sql = MainKit.getMySQL();
+			sql.update("UPDATE `"+buyKitTable+"` SET `used` = 1 WHERE `id` = "+use.get(0));
 			
-			sql.update("UPDATE "+buyKitTable+" SET used = '1' WHERE buyId = '"+use.get(0)+"'");
-
 		}
 	}
 	

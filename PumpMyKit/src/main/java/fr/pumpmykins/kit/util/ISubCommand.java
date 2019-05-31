@@ -22,20 +22,32 @@ public abstract class ISubCommand {
 
 
 			if(getPermission() != null && !getPermission().isEmpty()) {
-
+				
+				boolean allow = false;
+				
 				for(String s : getPermission()) {
 
 					if(PermissionAPI.hasPermission((EntityPlayer) sender, s)) {
 
-						onCommand(server, sender, args);
+						allow = true;
 						break;
 					}
 				}
+				if(allow)
+					onCommand(server, sender, args);
+				else {
+					System.out.println("no permission");
+				}
+					
 
 			} else
 				onCommand(server, sender, args);
 
 			return true;
+		} else {
+			if(args.length > 0)
+				args = (String[]) Arrays.copyOfRange(args, 1, args.length);
+			onCommand(server, sender, args);
 		}
 		return false;
 	}
