@@ -55,7 +55,7 @@ public class KitBuyCommand extends ISubCommand {
 	@Override
 	public List<String> getPermission() {
 		
-		return Arrays.asList("rank.staff.responsable");
+		return Arrays.asList("pumpmykins.staff.responsable");
 	}
 	
 	

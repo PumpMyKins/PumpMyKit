@@ -30,7 +30,7 @@ public abstract class ISubCommand {
 				for(String s : getPermission()) {
 
 					if(PermissionAPI.hasPermission((EntityPlayer) sender, s)) {
-
+						
 						allow = true;
 						break;
 					}

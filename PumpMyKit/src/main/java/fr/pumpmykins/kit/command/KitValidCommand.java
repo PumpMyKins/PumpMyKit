@@ -59,7 +59,7 @@ public class KitValidCommand extends ISubCommand {
 	@Override
 	public List<String> getPermission() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("rank.staff.responsable");
+		return Arrays.asList("pumpmykins.staff.responsable");
 	}
 
 }

@@ -46,7 +46,7 @@ public class KitHelpCommand extends ISubCommand {
 		
 		// TIER COMMAND
 		
-		if(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier1") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier2") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier3")) {
+		if(PermissionAPI.hasPermission((EntityPlayer) sender, "pumpmykins.vip.tier1") || PermissionAPI.hasPermission((EntityPlayer) sender, "pumpmykins.vip.tier2") || PermissionAPI.hasPermission((EntityPlayer) sender, "pumpmykins.vip.tier3")) {
 			
 			ITextComponent randomCommand = new TextComponentString("/kit random");
 			ITextComponent randomCommandbis = new TextComponentString(" (Pour avoir accès à un kit Random !)");
@@ -66,7 +66,7 @@ public class KitHelpCommand extends ISubCommand {
 		
 		// ADMIN COMMAND
 		
-		if(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.responsable") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.modo") || PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.admin")) {
+		if(PermissionAPI.hasPermission((EntityPlayer) sender, "pumpmykins.staff.responsable")) {
 		
 			ITextComponent modifyCommand = new TextComponentString("/kit modify <kitname> ");
 			ITextComponent modifyCommandbis = new TextComponentString("(Permet d'aller modifier un kit)");
