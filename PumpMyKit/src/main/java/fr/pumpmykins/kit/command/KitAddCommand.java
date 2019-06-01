@@ -1,15 +1,13 @@
 package fr.pumpmykins.kit.command;
 
+import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.ISubCommand;
 import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -20,42 +18,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitAddCommand implements ICommand {
+
+public class KitAddCommand extends ISubCommand {
 
 	private KitList kitlist;
-	
+
 	public KitAddCommand(KitList kitlistinstance) {
 		this.kitlist = kitlistinstance;
 	}
 
 	@Override
-	public int compareTo(ICommand o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		
-		return "kitadd";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-		
-		return "/kitadd <kitname>";
-	}
-
-	@Override
-	public List<String> getAliases() {
-		
-		return Lists.newArrayList("ka");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 
 		if(sender instanceof EntityPlayer) {
 			
@@ -63,10 +37,10 @@ public class KitAddCommand implements ICommand {
 			
 			if(args.length > 0) {
 				
-				if(player.dimension != 0) { //TODO Temporary v1
+				if(player.dimension != 0) {
 					return;
 				}
-				
+
 				String kitname = args[0];
 				
 				if(this.kitlist.getKit(kitname) == null) {
@@ -123,23 +97,10 @@ public class KitAddCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		if(sender instanceof EntityPlayer) {
-			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.add");
-		}
-		return false;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
+	public List<String> getPermission() {
 		
-		return null;
+		return Arrays.asList("rank.staff.responsable");
 	}
 
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-		return false;
-	}
-
+	
 }

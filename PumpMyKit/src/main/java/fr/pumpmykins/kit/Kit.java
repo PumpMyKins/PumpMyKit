@@ -18,7 +18,7 @@ public class Kit {
 	private UUID creator;
 	
 	public Kit(UUID creator, BlockPos chest_location, String kitname) {
-		
+
 		Date d = new Date();
 		
 		this.name = kitname;
@@ -27,7 +27,7 @@ public class Kit {
 		this.last_update = d.toString();
 		this.x = chest_location.getX();
 		this.y = chest_location.getY();
-		this.z = chest_location.getZ();
+		this.z = chest_location.getZ();		
 		
 	}
 	

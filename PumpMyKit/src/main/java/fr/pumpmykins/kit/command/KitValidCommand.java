@@ -1,15 +1,13 @@
 package fr.pumpmykins.kit.command;
 
+import java.util.Arrays;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import fr.pumpmykins.kit.Kit;
 import fr.pumpmykins.kit.KitList;
+import fr.pumpmykins.kit.util.ISubCommand;
 import fr.pumpmykins.kit.util.PmkStyleTable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -18,42 +16,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.server.permission.PermissionAPI;
 
-public class KitValidCommand implements ICommand {
+public class KitValidCommand extends ISubCommand {
 
 	private KitList kitlist;
-	
+
 	public KitValidCommand(KitList kitlistinstance) {
 		this.kitlist = kitlistinstance;
 	}
 
 	@Override
-	public int compareTo(ICommand o) {
-		
-		return 0;
-	}
-
-	@Override
-	public String getName() {
-		
-		return "kitvalid";
-	}
-
-	@Override
-	public String getUsage(ICommandSender sender) {
-		
-		return "/kitvalid <kitname>";
-	}
-
-	@Override
-	public List<String> getAliases() {
-		
-		return Lists.newArrayList("kvalid");
-	}
-
-	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void onCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 		
 		if(sender instanceof EntityPlayer) {
 			
@@ -75,7 +48,7 @@ public class KitValidCommand implements ICommand {
 					w.setBlockState(chest_pos.down(), bedrock);
 					w.setBlockState(chest_pos.up(), bedrock);
 				
-					ITextComponent init = new TextComponentString("Kit reprotégé avec succès");
+					ITextComponent init = new TextComponentString("Kit reprotege avec succes");
 					init.setStyle(PmkStyleTable.orangeBold());
 					sender.sendMessage(init);
 				}
@@ -84,25 +57,9 @@ public class KitValidCommand implements ICommand {
 	}
 
 	@Override
-	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		
-		if(sender instanceof EntityPlayer) {
-			return PermissionAPI.hasPermission((EntityPlayer) sender, "kit.modify");
-		}
-		return false;
-	}
-
-	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
-			BlockPos targetPos) {
-		
-		return null;
-	}
-
-	@Override
-	public boolean isUsernameIndex(String[] args, int index) {
-		
-		return false;
+	public List<String> getPermission() {
+		// TODO Auto-generated method stub
+		return Arrays.asList("rank.staff.responsable");
 	}
 
 }
