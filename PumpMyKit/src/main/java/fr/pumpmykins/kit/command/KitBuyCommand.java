@@ -25,8 +25,8 @@ public class KitBuyCommand extends ISubCommand {
 				
 				try {
 					
-					KitUtils.setRandomUse(UUID.fromString(args[0]), 0);
-					KitUtils.setSelectUse(UUID.fromString(args[0]), 0);
+					KitUtils.setRandomUse(UUID.fromString(args[1]), 0);
+					KitUtils.setSelectUse(UUID.fromString(args[1]), 0);
 				
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
