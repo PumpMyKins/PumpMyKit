@@ -34,7 +34,8 @@ public class KitBuyCommand extends ISubCommand {
 				}
 
 			}
-		} else if(args.length > 2) {
+		} 
+		if(args.length > 2) {
 			
 			try {
 				KitUtils.add(args[0], args[1], args[2]);
