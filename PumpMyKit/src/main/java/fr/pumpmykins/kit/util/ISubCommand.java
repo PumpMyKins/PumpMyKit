@@ -1,5 +1,6 @@
 package fr.pumpmykins.kit.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.command.ICommandSender;
@@ -8,7 +9,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
-import scala.actors.threadpool.Arrays;
 
 public abstract class ISubCommand {
 
