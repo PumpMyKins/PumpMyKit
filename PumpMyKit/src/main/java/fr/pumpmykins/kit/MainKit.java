@@ -71,11 +71,10 @@ public class MainKit {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		
-		PermissionAPI.registerNode("rank.staff.responsable", DefaultPermissionLevel.OP, "Allow the management of the Mod");
-		PermissionAPI.registerNode("rank.tier1", DefaultPermissionLevel.OP, "rank tier 1");
-		PermissionAPI.registerNode("rank.tier2", DefaultPermissionLevel.OP, "rank tier 2");
-		PermissionAPI.registerNode("rank.tier3", DefaultPermissionLevel.OP, "rank tier 3");
-		
+		PermissionAPI.registerNode("pumpmykins.staff.responsable", DefaultPermissionLevel.NONE, "Allow the management of the Mod");
+		PermissionAPI.registerNode("pumpmykins.vip.tier1", DefaultPermissionLevel.NONE, "rank tier 1");
+		PermissionAPI.registerNode("pumpmykins.vip.tier2", DefaultPermissionLevel.NONE, "rank tier 2");
+		PermissionAPI.registerNode("pumpmykins.vip.tier3", DefaultPermissionLevel.NONE, "rank tier 3");
 		
 		this.host = ModConfig.sqlConfig.host;
 		this.username = ModConfig.sqlConfig.username;
@@ -118,12 +117,6 @@ public class MainKit {
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
 		this.kitlistinstance = getData(event.getServer().getWorld(0));
-		/**
-		*
-		* event.registerServerCommand(new KitGetCommand(this.kitlistinstance));
-		* event.registerServerCommand(new KitRandomCommand(this.kitlistinstance));
-		*
-		**/
 		
 		event.registerServerCommand(new KitCommand(this.kitlistinstance));
 		

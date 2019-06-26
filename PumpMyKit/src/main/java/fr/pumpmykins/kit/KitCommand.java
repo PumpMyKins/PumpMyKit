@@ -17,7 +17,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-
 public class KitCommand implements ICommand {
 
 	private static HashMap<List<String>, ISubCommand> commands = new HashMap<List<String>, ISubCommand>();
@@ -97,7 +96,11 @@ public class KitCommand implements ICommand {
 
 	@Override
 	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-
+		
+		/*System.out.println(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier1"));
+		System.out.println(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier2"));
+		System.out.println(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.tier3"));
+		System.out.println(PermissionAPI.hasPermission((EntityPlayer) sender, "rank.staff.responsable"));*/
 		return true;
 	}
 

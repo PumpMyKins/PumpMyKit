@@ -101,7 +101,7 @@ public class KitGetCommand {
 			kitname.setStyle(PmkStyleTable.orangeBold());
 			player.sendMessage(kitname);
 			
-			if(PermissionAPI.hasPermission(player, "rank.tier1") || PermissionAPI.hasPermission(player, "rank.tier3") || PermissionAPI.hasPermission(player, "rank.tier2")) {
+			if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier1") || PermissionAPI.hasPermission(player, "pumpmykins.vip.tier2") || PermissionAPI.hasPermission(player, "pumpmykins.vip.tier3")) {
 
 				try {
 
@@ -114,11 +114,11 @@ public class KitGetCommand {
 
 
 					int selectRestriction = 0;
-					if(PermissionAPI.hasPermission(player, "rank.tier1"))
+					if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier1"))
 						selectRestriction = 1;
-					if(PermissionAPI.hasPermission(player, "rank.tier2"))
+					if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier3"))
 						selectRestriction = 3;
-					if(PermissionAPI.hasPermission(player, "rank.tier3"))
+					if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier2"))
 						selectRestriction = 5;
 					int selectCount = selectRestriction - kitnum.get();
 

@@ -46,7 +46,7 @@ public class KitListCommand extends ISubCommand {
 			
 			e.printStackTrace();
 		}
-		for(Kit k : kitlist.getKitlist()) {
+		for(Kit k : this.kitlist.getKitlist()) {
 
 			ITextComponent name = new TextComponentString("Nom : ");
 			ITextComponent namebis = new TextComponentString(k.getName());

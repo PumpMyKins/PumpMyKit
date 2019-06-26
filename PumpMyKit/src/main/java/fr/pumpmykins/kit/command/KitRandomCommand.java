@@ -38,11 +38,11 @@ public class KitRandomCommand extends ISubCommand {
 				EntityPlayer player = (EntityPlayer) sender;
 				Optional<Integer> kitnum = KitUtils.getRandomUse(player.getUniqueID());
 				int randomRestriction = 0;
-				if(PermissionAPI.hasPermission(player, "rank.tier1"))
+				if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier1"))
 					randomRestriction = 1;
-				if(PermissionAPI.hasPermission(player, "rank.tier2"))
+				if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier2"))
 					randomRestriction = 3;
-				if(PermissionAPI.hasPermission(player, "rank.tier3"))
+				if(PermissionAPI.hasPermission(player, "pumpmykins.vip.tier3"))
 					randomRestriction = 5;
 				int randomCount = randomRestriction;
 
@@ -97,7 +97,7 @@ public class KitRandomCommand extends ISubCommand {
 	@Override
 	public List<String> getPermission() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("rank.tier1", "rank.tier2", "rank.tier3");
+		return Arrays.asList("pumpmykins.vip.tier1", "pumpmykins.vip.tier2", "pumpmykins.vip.tier3");
 	}
 
 
