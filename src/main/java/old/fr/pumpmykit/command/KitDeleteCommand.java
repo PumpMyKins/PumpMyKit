@@ -1,18 +1,18 @@
-package fr.pumpmykit.command;
+package old.fr.pumpmykit.command;
 
 import java.util.Arrays;
 import java.util.List;
 
-import fr.pumpmykit.Kit;
-import fr.pumpmykit.KitList;
-import fr.pumpmykit.util.ISubCommand;
-import fr.pumpmykit.util.PmkStyleTable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import old.fr.pumpmykit.Kit;
+import old.fr.pumpmykit.KitList;
+import old.fr.pumpmykit.util.ISubCommand;
+import old.fr.pumpmykit.util.PmkStyleTable;
 
 public class KitDeleteCommand extends ISubCommand {
 

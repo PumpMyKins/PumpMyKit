@@ -1,4 +1,4 @@
-package fr.pumpmykit.command;
+package old.fr.pumpmykit.command;
 
 
 import java.sql.SQLException;
@@ -8,9 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import fr.pumpmykit.Kit;
-import fr.pumpmykit.util.KitUtils;
-import fr.pumpmykit.util.PmkStyleTable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,6 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.server.permission.PermissionAPI;
+import old.fr.pumpmykit.Kit;
+import old.fr.pumpmykit.util.KitUtils;
+import old.fr.pumpmykit.util.PmkStyleTable;
 
 public class KitGetCommand {
 

@@ -1,4 +1,4 @@
-package fr.pumpmykit;
+package old.fr.pumpmykit;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,14 +8,14 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import fr.pumpmykit.command.KitGetCommand;
-import fr.pumpmykit.util.ISubCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import old.fr.pumpmykit.command.KitGetCommand;
+import old.fr.pumpmykit.util.ISubCommand;
 
 public class KitCommand implements ICommand {
 

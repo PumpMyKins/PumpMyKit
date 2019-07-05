@@ -1,23 +1,11 @@
-package fr.pumpmykit;
+package old.fr.pumpmykit;
 
 import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
 
-import fr.pumpmykit.command.KitAddCommand;
-import fr.pumpmykit.command.KitBuyCommand;
-import fr.pumpmykit.command.KitDeleteCommand;
-import fr.pumpmykit.command.KitHelpCommand;
-import fr.pumpmykit.command.KitListCommand;
-import fr.pumpmykit.command.KitModifyCommand;
-import fr.pumpmykit.command.KitRandomCommand;
-import fr.pumpmykit.command.KitSelectCommand;
-import fr.pumpmykit.command.KitValidCommand;
-import fr.pumpmykit.command.KitViewCommand;
-import fr.pumpmykit.util.MySQL;
-import fr.pumpmykit.util.MySql;
-import fr.pumpmykit.util.MySQL.MySQLCredentials;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.common.config.Config;
@@ -32,6 +20,18 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
+import old.fr.pumpmykit.command.KitAddCommand;
+import old.fr.pumpmykit.command.KitBuyCommand;
+import old.fr.pumpmykit.command.KitDeleteCommand;
+import old.fr.pumpmykit.command.KitHelpCommand;
+import old.fr.pumpmykit.command.KitListCommand;
+import old.fr.pumpmykit.command.KitModifyCommand;
+import old.fr.pumpmykit.command.KitRandomCommand;
+import old.fr.pumpmykit.command.KitSelectCommand;
+import old.fr.pumpmykit.command.KitValidCommand;
+import old.fr.pumpmykit.command.KitViewCommand;
+import old.fr.pumpmykit.util.MySql;
+import old.fr.pumpmykit.util.MySql.MySQLCredentials;
 
 
 @Mod(useMetadata=true, modid = "pmkkit", acceptableRemoteVersions="*")
@@ -42,24 +42,11 @@ public class MainKit {
 	
 	public static Logger logger;
 	
-	private static final String MODID = "pmkkit";
+	private static final String MODID = "pumpmykit";
 	
 	private static final String KITLIST_KEY = MODID+"_kitlist";
 	
 	private KitList kitlistinstance;
-	
-	static MySql mySQL;
-	public String host = "";
-	public String username = "";
-	public String password = "";
-	public String database = "";
-	public int port = 3306;
-	
-	public String servername ="";
-	
-	public static String BUYTABLE = "";
-	public static String KITRANDOMTABLE = "";
-	public static String KITSELECTTABLE = "";
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -68,20 +55,27 @@ public class MainKit {
 		
 	}
 	
-	@SuppressWarnings("static-access")
+	
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		
-		PermissionAPI.registerNode("pumpmykins.staff.responsable", DefaultPermissionLevel.NONE, "Allow the management of the Mod");
-		PermissionAPI.registerNode("pumpmykins.vip.tier1", DefaultPermissionLevel.NONE, "rank tier 1");
-		PermissionAPI.registerNode("pumpmykins.vip.tier2", DefaultPermissionLevel.NONE, "rank tier 2");
-		PermissionAPI.registerNode("pumpmykins.vip.tier3", DefaultPermissionLevel.NONE, "rank tier 3");
 		
-		this.host = ModConfig.sqlConfig.host;
-		this.username = ModConfig.sqlConfig.username;
-		this.password = ModConfig.sqlConfig.password;
-		this.database = ModConfig.sqlConfig.database;
-		this.port = ModConfig.sqlConfig.port;
+		try {
+			MySQLCredentials credentials = new MySQLCredentials(ModConfig.sqlConfig.host, ModConfig.sqlConfig.port, ModConfig.sqlConfig.username, ModConfig.sqlConfig.password, ModConfig.sqlConfig.database);
+			this.mySql = new MySql(credentials);
+			this.mySql.openConnection();
+			getLogger().info("MySQL OK");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			getLogger().error("JDBC error, plugin disabled !");
+			return;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			this.getLogger().severe("MySQL connection error, plugin disabled !");
+			return;
+		}
+
 		
 		
 		this.servername = ModConfig.serverconfig.servername;
@@ -97,16 +91,14 @@ public class MainKit {
 		if(ModConfig.serverconfig.globalselect)
 			this.KITSELECTTABLE = this.KITSELECTTABLE.concat(this.servername);
 			
-		MySQLCredentials credentials = new MySQLCredentials(this.host, this.port, this.username, this.password, this.database);
-		mySQL = new MySQL(credentials);
-		mySQL.openConnection();
-		if(mySQL.isConnected()) {
+		
+		if(mySql.isConnected()) {
 			
 			System.out.println("MySQL connection success.");
 			//BASE DE DONNER
-			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.BUYTABLE+"( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
-			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.KITRANDOMTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
-			mySQL.update("CREATE TABLE IF NOT EXISTS "+this.KITSELECTTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
+			mySql.update("CREATE TABLE IF NOT EXISTS "+this.BUYTABLE+"( `id` INT NOT NULL AUTO_INCREMENT,`buyId` VARCHAR(50) NOT NULL , `username` VARCHAR(16) NOT NULL , `kitname` VARCHAR(50) NOT NULL ,`used` BOOLEAN, buyAt DATETIME,PRIMARY KEY (`id`))");
+			mySql.update("CREATE TABLE IF NOT EXISTS "+this.KITRANDOMTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
+			mySql.update("CREATE TABLE IF NOT EXISTS "+this.KITSELECTTABLE+"(`id` INT NOT NULL AUTO_INCREMENT,`user_uuid` VARCHAR(60) NOT NULL,`kitnum` INT NOT NULL, PRIMARY KEY (`id`))");
 
 		} else {
 			
@@ -132,6 +124,8 @@ public class MainKit {
 		KitCommand.registerSubCommand(Arrays.asList("list", "l"), new KitListCommand(this.kitlistinstance));
 		
 		KitCommand.registerSubCommand(Arrays.asList("buy"), new KitBuyCommand());
+		
+		event.getServer().initiateShutdown();
 		
 	}
 	
@@ -261,19 +255,19 @@ public class MainKit {
 	}
 
 	public static MySQL getMySQL() throws SQLException {
-		if(mySQL.isConnected()) {
-			return mySQL;
+		if(mySql.isConnected()) {
+			return mySql;
 		} else {
-			mySQL.refreshConnection();
-			if(mySQL.isConnected()) {
-				return mySQL;
+			mySql.refreshConnection();
+			if(mySql.isConnected()) {
+				return mySql;
 			}
 		}
 		return null;
 	}
 
 	public static void setMySQL(MySQL mySQL) {
-		MainKit.mySQL = mySQL;
+		MainKit.mySql = mySQL;
 	}
 
 	public String getBUYTABLE() {

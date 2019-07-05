@@ -1,4 +1,4 @@
-package fr.pumpmykit.util;
+package old.fr.pumpmykit.util;
 
 import java.util.Arrays;
 import java.util.List;

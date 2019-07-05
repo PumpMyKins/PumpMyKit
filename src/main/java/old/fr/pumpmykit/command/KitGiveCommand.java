@@ -1,7 +1,7 @@
-package fr.pumpmykit.command;
+package old.fr.pumpmykit.command;
 
-import fr.pumpmykit.Kit;
 import net.minecraft.command.ICommandSender;
+import old.fr.pumpmykit.Kit;
 
 public class KitGiveCommand {
 

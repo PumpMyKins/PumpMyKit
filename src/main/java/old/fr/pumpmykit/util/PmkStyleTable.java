@@ -1,4 +1,4 @@
-package fr.pumpmykit.util;
+package old.fr.pumpmykit.util;
 
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;

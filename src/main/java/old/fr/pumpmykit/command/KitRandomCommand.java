@@ -1,4 +1,4 @@
-package fr.pumpmykit.command;
+package old.fr.pumpmykit.command;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import fr.pumpmykit.Kit;
-import fr.pumpmykit.KitList;
-import fr.pumpmykit.util.ISubCommand;
-import fr.pumpmykit.util.KitUtils;
-import fr.pumpmykit.util.PmkStyleTable;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.server.permission.PermissionAPI;
+import old.fr.pumpmykit.Kit;
+import old.fr.pumpmykit.KitList;
+import old.fr.pumpmykit.util.ISubCommand;
+import old.fr.pumpmykit.util.KitUtils;
+import old.fr.pumpmykit.util.PmkStyleTable;
 
 public class KitRandomCommand extends ISubCommand {
 

@@ -1,4 +1,4 @@
-package fr.pumpmykit;
+package old.fr.pumpmykit;
 
 import java.util.Date;
 import java.util.UUID;
