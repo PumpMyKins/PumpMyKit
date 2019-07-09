@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import fr.pumpmykit.Main;
+import fr.pumpmykit.MainKit;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 
 public class KitList extends WorldSavedData {
 
-	public static final String KEY = Main.MODID + "_pumpmykit";
+	public static final String KEY = MainKit.MODID + "_pumpmykit";
 
 	public static KitList getData(World w) {
 

@@ -2,7 +2,7 @@ package fr.pumpmykit;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = Main.MODID)
+@Config(modid = MainKit.MODID)
 public class KitsConfig {
 
 	public static String host = "localhost";

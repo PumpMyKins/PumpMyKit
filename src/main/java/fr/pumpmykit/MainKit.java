@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 
-@Mod(modid = Main.MODID, name = Main.NAME, version = Main.VERSION, acceptableRemoteVersions = "*", serverSideOnly = true)
-public class Main
+@Mod(modid = MainKit.MODID, name = MainKit.NAME, version = MainKit.VERSION, acceptableRemoteVersions = "*", serverSideOnly = true)
+public class MainKit
 {
     public static final String MODID = "pumpmykit";
     public static final String NAME = "PumpMyKit";
