@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 
-@Mod(modid = MainKit.MODID, name = MainKit.NAME, version = MainKit.VERSION, acceptableRemoteVersions = "*", serverSideOnly = true)
+@Mod(modid = MainKit.MODID, name = MainKit.NAME, version = MainKit.VERSION, acceptableRemoteVersions = "*")
 public class MainKit
 {
     public static final String MODID = "pumpmykit";
@@ -47,6 +47,7 @@ public class MainKit
 					MySql mySql = new MySql(credentials);
 					mySql.openConnection();
 					KITSMANAGER = new KitsManager(mySql);
+					LOGGER.info("KitsManager & MySql OK !");
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 					return;
@@ -71,8 +72,6 @@ public class MainKit
 			KITSMANAGER.setKitList(KitList.getData(event.getServer().getEntityWorld()));
 			
 			event.registerServerCommand(new KitCommand());
-			
-			
 			
 		}
 		
