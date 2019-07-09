@@ -34,11 +34,19 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
+
 dependencies {
 	
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+	embed group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
 	
 }
+
+
 
 processResources {
     // this will ensure that this task is redone when the versions change.
@@ -57,4 +65,8 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+jar {
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
 }
