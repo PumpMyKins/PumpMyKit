@@ -10,6 +10,8 @@ import fr.pumpmykit.command.KitCommand;
 import fr.pumpmykit.utils.KitList;
 import fr.pumpmykit.utils.MySql;
 import fr.pumpmykit.utils.MySql.MySqlCredentials;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -22,6 +24,8 @@ public class MainKit
     public static final String MODID = "pumpmykit";
     public static final String NAME = "PumpMyKit";
     public static final String VERSION = "1.0";
+    
+    public static final ITextComponent CHAT_PREFIX = new TextComponentString("§l§6[§2Pump§eMy§dKit§6]§r§f ");
     
     public static Logger LOGGER;
     public static ExecutorService EXEC;
