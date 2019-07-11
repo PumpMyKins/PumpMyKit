@@ -1,6 +1,7 @@
 package fr.pumpmykit;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
 import fr.pumpmykit.exceptions.InsufisentSelectException;
@@ -9,7 +10,11 @@ import fr.pumpmykit.exceptions.UnfoundSqlProfileException;
 import fr.pumpmykit.utils.Kit;
 import fr.pumpmykit.utils.KitList;
 import fr.pumpmykit.utils.MySql;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextComponentString;
 
 public class KitsManager {
 
