@@ -2,12 +2,17 @@ package fr.pumpmykit.command;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import fr.pumpmykit.MainKit;
+import fr.pumpmykit.exceptions.UnfoudKitException;
+import fr.pumpmykit.utils.Kit;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -20,13 +25,13 @@ import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
 
 public class KitCommand implements ICommand {
-	
+
 	public KitCommand() {
-		
+
 		PermissionAPI.registerNode("pumpmykit.command.kit", DefaultPermissionLevel.NONE, "Command Kit Permission");
-		
+
 	}
-	
+
 	@Override
 	public int compareTo(ICommand arg0) {
 		// TODO Auto-generated method stub
