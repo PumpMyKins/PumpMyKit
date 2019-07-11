@@ -1,78 +1,20 @@
 package fr.pumpmykit.utils;
 
-import java.util.Date;
-import java.util.UUID;
-
-import net.minecraft.util.math.BlockPos;
+import java.util.List;
+import net.minecraft.item.ItemStack;
 
 public class Kit {
 
 	private String name;
+	private String displayName;
+	private List<ItemStack> items;
 	
-	private int x;
-	private int y;
-	private int z;
-	
-	private String last_update;
-	private UUID last_updator;
-	private UUID creator;
-	
-	public Kit(UUID creator, BlockPos chest_location, String kitname) {
-
-		Date d = new Date();
-		
-		this.name = kitname;
-		this.creator = creator;
-		this.last_updator = creator;
-		this.last_update = d.toString();
-		this.x = chest_location.getX();
-		this.y = chest_location.getY();
-		this.z = chest_location.getZ();		
-		
+	public Kit(String name, String displayName, List<ItemStack> items) {
+		super();
+		this.name = name;
+		this.displayName = displayName;
+		this.items = items;
 	}
-	
-	public Kit(UUID creator, BlockPos chest_location, String kitname, UUID last_updator) {
-		
-		Date d = new Date();
-		
-		this.name = kitname;
-		this.creator = creator;
-		this.last_updator = last_updator;
-		this.last_update = d.toString();
-		this.x = chest_location.getX();
-		this.y = chest_location.getY();
-		this.z = chest_location.getZ();
-		
-	}
-	
-	public Kit(UUID creator, BlockPos chest_location, String kitname, UUID last_updator, String date) {
-		
-		this.name = kitname;
-		this.creator = creator;
-		this.last_updator = creator;
-		this.last_update = date;
-		this.x = chest_location.getX();
-		this.y = chest_location.getY();
-		this.z = chest_location.getZ();
-		
-	}
-	
-	
-	/*static Kit createKit(UUID creator, BlockPos chest_location, String kitname) {
-		
-		Kit k = new Kit();
-		
-		k.setLast_updator(creator);
-		k.setCreator(creator);
-		
-		k.setX(chest_location.getX());
-		k.setY(chest_location.getY());
-		k.setZ(chest_location.getZ());
-		
-		k.setName(kitname);
-		
-		return k;
-	}*/
 
 	public String getName() {
 		return name;
@@ -82,53 +24,20 @@ public class Kit {
 		this.name = name;
 	}
 
-	public int getX() {
-		return x;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
-	public int getY() {
-		return y;
+	public List<ItemStack> getItems() {
+		return items;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setItems(List<ItemStack> items) {
+		this.items = items;
 	}
-
-	public int getZ() {
-		return z;
-	}
-
-	public void setZ(int z) {
-		this.z = z;
-	}
-
-	public String getLast_update() {
-		return last_update;
-	}
-
-	public void setLast_update(String last_update) {
-		this.last_update = last_update;
-	}
-
-	public UUID getLast_updator() {
-		return last_updator;
-	}
-
-	public void setLast_updator(UUID last_updator) {
-		this.last_updator = last_updator;
-	}
-
-	public UUID getCreator() {
-		return creator;
-	}
-
-	public void setCreator(UUID creator) {
-		this.creator = creator;
-	}
-	
 	
 }
