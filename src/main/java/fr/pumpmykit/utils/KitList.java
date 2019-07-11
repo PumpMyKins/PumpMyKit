@@ -38,19 +38,14 @@ public class KitList extends WorldSavedData {
 			storage.setData(KEY, instance);
 		}
 	}
-
-	public KitList(String key) {
-		super(key);
-		this.kitlist = new ArrayList<Kit>();
-	}
 	
 	public KitList() {
 		super(KEY);
-		this.kitlist = new ArrayList<Kit>();
+		this.kitlist = new HashMap<>();
 	}
 
 
-	private List<Kit> kitlist;
+	private HashMap<String, Kit> kitlist;
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -107,78 +102,37 @@ public class KitList extends WorldSavedData {
 		return compound;
 	}
 
-	public void removeKit(Kit k) {
-
-		for(int i = 0; i < this.kitlist.size(); i ++) {
-			if(this.kitlist.get(i).getName().equals(k.getName())) {
-
-				kitlist.remove(i);
-				markDirty();
-				break;
-			}
+	public void removeKit(String kitname) throws UnfoudKitException {
+		if(!this.kitlist.containsKey(kitname)) {
+			throw new UnfoudKitException(kitname);
 		}
+		markDirty();
+		this.kitlist.remove(kitname);		
 	}
 
-	public void removeKit(String name) {
-
-		for(int i = 0; i < this.kitlist.size(); i ++) {
-			if(this.kitlist.get(i).getName().equals(name)) {
-
-				this.kitlist.remove(i);
-				markDirty();
-			}
-		}
+	public void addKit(Kit k) throws DuplicateKitException {
+		if(this.kitlist.containsKey(k.getName())) {
+			throw new DuplicateKitException(k.getName());
+		}	
+		markDirty();
+		this.kitlist.put(k.getName(), k);		
 	}
 
-	public void addKit(Kit k) {
-
-		boolean exist = false;
-		for(int i = 0; i < this.kitlist.size(); i ++) {
-			if(this.kitlist.get(i).getName().equals(k.getName())) {
-
-				exist = true;
-				break;
-			}
-		}
-		if(!exist) {
-
-			this.kitlist.add(k);
-			markDirty();
-		}
-	}
-
-	public Kit getKit(String kitname) {
-
-		for(int i = 0; i < this.kitlist.size(); i ++) {
-			if(this.kitlist.get(i).getName().equals(kitname)) {
-
-				return this.kitlist.get(i);
-			}
-		}
-		return null;
+	public Kit getKit(String kitname) throws UnfoudKitException {
+		if(!this.kitlist.containsKey(kitname)) {
+			throw new UnfoudKitException(kitname);
+		}		
+		return this.kitlist.get(kitname);		
 	}
 	
 	public Kit getRandomKit() {
 		
 		Random random = new Random();
-		return this.kitlist.get(random.nextInt(this.kitlist.size()-1));
+		return (Kit) this.kitlist.values().toArray()[random.nextInt(this.kitlist.size()-1)];
 		
 	}
 
-	public Kit getKit(BlockPos pos) {
-
-		for(int i = 0; i< this.kitlist.size(); i++) {
-
-			Kit k = this.kitlist.get(i);
-			if(pos.getX() == k.getX() && pos.getY() == k.getY() && pos.getZ() == k.getZ()) {
-
-				return k;
-			}
-		}
-		return null;
-	}
-
-	public List<Kit> getKitlist() {
+	public HashMap<String,Kit> getKitlist() {
 		return this.kitlist;
 	}
 
