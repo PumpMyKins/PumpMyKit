@@ -1,14 +1,15 @@
 package fr.pumpmykit.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
-
 import fr.pumpmykit.MainKit;
+import fr.pumpmykit.exceptions.DuplicateKitException;
+import fr.pumpmykit.exceptions.UnfoudKitException;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
