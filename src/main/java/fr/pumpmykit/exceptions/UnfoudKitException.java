@@ -17,4 +17,8 @@ public class UnfoudKitException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
+	public UnfoudKitException(String kitName) {
+		// TODO Auto-generated constructor stub
+	}
+
 }
