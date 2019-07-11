@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.ClickEvent.Action;
@@ -95,24 +94,41 @@ public class KitCommand implements ICommand {
 			this.selectSubCommand(server,sender,args);			
 		}else if(subCommand.equalsIgnoreCase("random")) {			
 			this.randomSubCommand(server,sender,args);			
+		}else if(subCommand.equalsIgnoreCase("list")) {			
+			this.listSubCommand(server,sender,args);		
+		}else if(subCommand.equalsIgnoreCase("view")) {			
+			this.viewSubCommand(server,sender,args);			
 		}else {
 			this.helpSubCommand(server,sender,args);
 		}		
 
 	}
 
-	private void randomSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
+	private void viewSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	private void listSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void randomSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
+		
+		
 		
 	}
 
 	private void selectSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
 	private void helpSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
