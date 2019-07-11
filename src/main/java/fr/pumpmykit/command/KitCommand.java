@@ -55,43 +55,43 @@ public class KitCommand implements ICommand {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		
+
 		if(!(sender instanceof EntityPlayer)) {
 			sender.sendMessage(new TextComponentString("§cPlayer command only !"));
 			return;
 		}
-		
+
 		EntityPlayer player = (EntityPlayer) sender;
-		
+
 		if(!PermissionAPI.hasPermission(player, "pumpmykit.command.kit")) {
-			
-			ITextComponent txt = MainKit.CHAT_PREFIX;
+
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Fonctionnalité achetable en boutique");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 			txt = new TextComponentString("Voir : ");
 			txt.setStyle(new Style().setColor(TextFormatting.RED));
-			
+
 			txt2 = new TextComponentString("http://store.pumpmykins.eu/");
 			txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.OPEN_URL, "http://store.pumpmykins.eu/")));
-		
+
 			txt.appendSibling(txt2);
-			
+
 			sender.sendMessage(txt);
-			
+
 			return;
-			
+
 		}
-		
+
 		if(args.length == 0) {
-			
+
 			this.helpSubCommand(server,sender,args);
 			return;
-			
+
 		}
-		
+
 		String subCommand = args[0];
 		if(subCommand.trim().isEmpty()) {			
 			this.helpSubCommand(server,sender,args);			
@@ -103,8 +103,12 @@ public class KitCommand implements ICommand {
 			this.listSubCommand(server,sender,args);		
 		}else if(subCommand.equalsIgnoreCase("view")) {			
 			this.viewSubCommand(server,sender,args);			
+		}else if(subCommand.equalsIgnoreCase("help")) {			
+			this.helpSubCommand(server,sender,args);			
 		}else {
-			this.helpSubCommand(server,sender,args);
+			
+			this.synthaxErrorMessage(sender);
+			
 		}		
 
 	}
