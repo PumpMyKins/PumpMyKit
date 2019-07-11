@@ -55,24 +55,25 @@ public class KitList extends WorldSavedData {
 	public void readFromNBT(NBTTagCompound nbt) {
 
 		NBTTagList kit_list = nbt.getTagList(KEY, NBT.TAG_COMPOUND);
+		
 		for(int i =0; i < kit_list.tagCount(); i++) {
 
 			NBTTagCompound tmp_nbt = kit_list.getCompoundTagAt(i);
 
 			String name = tmp_nbt.getString("name");
-			UUID creator = tmp_nbt.getUniqueId("creator");
-			UUID last_updator = tmp_nbt.getUniqueId("last_updator");
-			String date = tmp_nbt.getString("last_update");
+			String displayname = tmp_nbt.getString("displayname");
 
-			int x = tmp_nbt.getInteger("x");
-			int y = tmp_nbt.getInteger("y");
-			int z = tmp_nbt.getInteger("z");
+			List<ItemStack> items = new ArrayList<>();
+			NBTTagList contentList = (NBTTagList) tmp_nbt.getTag("items");			
+			for(int y =0; i < contentList.tagCount(); y++) {
 
-			BlockPos chest_pos = new BlockPos(x,y,z);
-
-			Kit tmp_k = new Kit(creator, chest_pos, name, last_updator, date);
-
-			this.kitlist.add(tmp_k);
+				NBTTagCompound tmp_nbt_item = contentList.getCompoundTagAt(y);
+				items.add(new ItemStack(tmp_nbt_item));
+				
+			}
+			
+			Kit tmp_k = new Kit(name,displayname,items);
+			this.kitlist.put(name, tmp_k);
 
 		}
 	}
@@ -81,18 +82,25 @@ public class KitList extends WorldSavedData {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
 		NBTTagList kit_list = new NBTTagList();
-		for(Kit k : this.kitlist) {
+		for(Kit k : this.kitlist.values()) {
 
 			NBTTagCompound tmp = new NBTTagCompound();
 			tmp.setString("name", k.getName());
-			tmp.setUniqueId("creator", k.getCreator());
-			tmp.setUniqueId("last_updator", k.getLast_updator());
-			tmp.setString("last_update", k.getLast_update());
-			tmp.setInteger("x", k.getX());
-			tmp.setInteger("y", k.getY());
-			tmp.setInteger("z", k.getZ());
-
+			tmp.setString("displayname", k.getDisplayName());
+			
+			NBTTagList contentList = new NBTTagList();
+			for (ItemStack item : k.getItems()) {
+				
+				NBTTagCompound tag = new NBTTagCompound();
+				tag = item.writeToNBT(tag);
+				contentList.appendTag(tag);
+				
+			}
+			
+			tmp.setTag("items", contentList);
+			
 			kit_list.appendTag(tmp);
+			
 		}
 		compound.setTag(KEY, kit_list);
 		return compound;
