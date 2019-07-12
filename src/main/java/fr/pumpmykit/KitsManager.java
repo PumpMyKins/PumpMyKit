@@ -7,6 +7,7 @@ import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
 import fr.pumpmykit.exceptions.InsufisentSelectException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
 import fr.pumpmykit.exceptions.UnfoundSqlProfileException;
+import fr.pumpmykit.utils.BlockUtils;
 import fr.pumpmykit.utils.Kit;
 import fr.pumpmykit.utils.KitList;
 import fr.pumpmykit.utils.MySql;
@@ -14,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
 public class KitsManager {
@@ -168,7 +170,12 @@ public class KitsManager {
 	}
 	public void addKit(EntityPlayer player, String name, String displayName) {
 		
-		
+		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
+		if(blockPos == null) {
+			
+			throw new UnfoundKitChestException();
+			
+		}
 		
 	}
 	public void removeKit(String name) throws UnfoudKitException {

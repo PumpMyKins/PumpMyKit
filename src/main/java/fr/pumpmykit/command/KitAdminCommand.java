@@ -206,9 +206,7 @@ public class KitAdminCommand implements ICommand {
 			sender.sendMessage(txt);
 
 		}
-
-
-
+		
 	}
 
 	private void addSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -235,7 +233,7 @@ public class KitAdminCommand implements ICommand {
 			return;
 
 		}
-
+		
 	}
 
 	private void synthaxErrorMessage(ICommandSender sender) {
