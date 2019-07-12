@@ -166,5 +166,25 @@ public class KitsManager {
 		inv.openInventory(player);
 		
 	}
+	public void addKit(EntityPlayer player, String name, String displayName) {
+		
+		
+		
+	}
+	public void removeKit(String name) throws UnfoudKitException {
+		
+		this.getKitList().removeKit(name);
+		
+	}
+	public void loadKit(EntityPlayer player, String name) throws UnfoudKitException {
+		
+		Kit kit = this.getKit(name);
+		
+	}
+	public void updateContentKit(EntityPlayer player, String name) throws UnfoudKitException {
+		
+		Kit kit = this.getKit(name);
+		
+	}
 
 }
