@@ -251,14 +251,39 @@ public class KitAdminCommand implements ICommand {
 		try {
 			MainKit.KITSMANAGER.addKit(player,name,displayName);
 		} catch (UnfoundKitChestException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous avez ajouté le contenu du le kit à ajouter !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
 		} catch (KitIsEmptyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Le kit que vous essayez de créer est vide !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
 		} catch (DuplicateKitException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Kit du même nom déjà existant !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+
+			txt = new TextComponentString("Essayez : ");
+			txt.setStyle(new Style().setColor(TextFormatting.RED));
+
+			txt2 = new TextComponentString("/kit list");
+			txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit list")));
+
+			txt.appendSibling(txt2);
+
+			sender.sendMessage(txt);
+			
 		}
 
 	}
