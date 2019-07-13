@@ -17,7 +17,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 
 public class KitList extends WorldSavedData {
 
-	public static final String KEY = MainKit.MODID + "_pumpmykit";
+	public static final String KEY = MainKit.MODID + "_kits";
 
 	public static KitList getData(World w) {
 
@@ -28,19 +28,16 @@ public class KitList extends WorldSavedData {
 			storage.setData(KEY, instance);
 		}
 		return instance;
-	}
-
-	public static void setData(World w) {
-
-		MapStorage storage = w.getMapStorage();
-		KitList instance = (KitList) storage.getOrLoadData(KitList.class, KEY);
-		if(instance.isDirty()) {
-			storage.setData(KEY, instance);
-		}
+		
 	}
 	
 	public KitList() {
 		super(KEY);
+		this.kitlist = new HashMap<>();
+	}
+	
+	public KitList(String s) {
+		super(s);
 		this.kitlist = new HashMap<>();
 	}
 
