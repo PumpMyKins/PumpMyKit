@@ -133,6 +133,22 @@ public class KitAdminCommand implements ICommand {
 
 			sender.sendMessage(txt);
 
+		} catch (UnfoundKitChestException e) {
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous avez importer le kit à modifier !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
+		} catch (KitIsEmptyException e) {
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Le kit que vous essayez de créer est vide !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
 		}
 
 	}
