@@ -1,4 +1,4 @@
-package fr.pumpmykit;
+package fr.pumpmykit.exceptions;
 
 public class UnfoundKitChestException extends Exception {
 
