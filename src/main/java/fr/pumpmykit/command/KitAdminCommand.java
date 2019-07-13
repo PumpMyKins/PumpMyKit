@@ -12,6 +12,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -112,7 +113,7 @@ public class KitAdminCommand implements ICommand {
 		String name = args[1];
 		try {
 
-			EntityPlayer player = (EntityPlayer) sender;
+			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.updateContentKit(player,name);
 
 		} catch (UnfoudKitException e) {
@@ -163,7 +164,7 @@ public class KitAdminCommand implements ICommand {
 		String name = args[1];
 		try {
 
-			EntityPlayer player = (EntityPlayer) sender;
+			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.loadKit(player,name);
 
 		} catch (UnfoudKitException e) {
@@ -247,7 +248,7 @@ public class KitAdminCommand implements ICommand {
 		String displayName = args[2];
 
 
-		EntityPlayer player = (EntityPlayer) sender;
+		EntityPlayerMP player = (EntityPlayerMP) sender;
 		try {
 			MainKit.KITSMANAGER.addKit(player,name,displayName);
 		} catch (UnfoundKitChestException e) {
