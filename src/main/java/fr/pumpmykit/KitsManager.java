@@ -3,6 +3,7 @@ package fr.pumpmykit;
 import java.sql.ResultSet;
 import java.util.List;
 
+import fr.pumpmykit.exceptions.DuplicateKitException;
 import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
 import fr.pumpmykit.exceptions.InsufisentSelectException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
