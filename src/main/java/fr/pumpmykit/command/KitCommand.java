@@ -1,17 +1,22 @@
 package fr.pumpmykit.command;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import fr.pumpmykit.MainKit;
+import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
+import fr.pumpmykit.exceptions.InsufisentSelectException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
+import fr.pumpmykit.exceptions.UnfoundSqlProfileException;
 import fr.pumpmykit.utils.Kit;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
