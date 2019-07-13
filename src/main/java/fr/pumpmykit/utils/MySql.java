@@ -32,7 +32,7 @@ public class MySql {
 		this.conn.close();
 	}
 
-	public ResultSet sendQuery(String query) throws Exception {
+	public ResultSet sendQuery(String query) throws SQLException {
 		if (isConnected()) {
 
 			Statement st = this.conn.createStatement();
@@ -41,10 +41,10 @@ public class MySql {
 			return rs;
 
 		}
-		throw new Exception("SQL connection closed !");
+		throw new SQLException("SQL connection closed !");
 	}
 
-	public void sendUpdate(String update) throws Exception {
+	public void sendUpdate(String update) throws SQLException {
 		if (isConnected()) {
 
 			Statement statement = this.conn.createStatement();	//create statement
@@ -54,7 +54,7 @@ public class MySql {
 			statement.close();
 
 		}else {
-			throw new Exception("SQL connection closed !");
+			throw new SQLException("SQL connection closed !");
 		}
 
 	}
