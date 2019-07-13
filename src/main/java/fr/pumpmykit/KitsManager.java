@@ -152,13 +152,13 @@ public class KitsManager {
 		
 		Kit kit = this.getKit(kitName);
 
-		this.setKitToPlayer(player, kit);
+		KitsManager.setKitToPlayer(player, kit);
 
 		return kit;
 
 	}
 
-	private void setKitToPlayer(EntityPlayer player, Kit kit) {
+	private static void setKitToPlayer(EntityPlayer player, Kit kit) {
 
 		InventoryBasic inv = new InventoryBasic(new TextComponentString(kit.getDisplayName()), kit.getItems().size());
 		
@@ -169,7 +169,8 @@ public class KitsManager {
 		inv.openInventory(player);
 		
 	}
-	public void addKit(EntityPlayer player, String name, String displayName) {
+	
+	public void addKit(EntityPlayer player, String name, String displayName) throws UnfoundKitChestException, KitIsEmptyException, DuplicateKitException {
 		
 		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
 		if(blockPos == null) {
@@ -178,20 +179,53 @@ public class KitsManager {
 			
 		}
 		
+		List<ItemStack> content = BlockUtils.getChestBlockContent(blockPos);
+		if(content.isEmpty()) {
+			throw new KitIsEmptyException();
+		}
+		
+		Kit k = new Kit(name, displayName, content);		
+		this.getKitList().addKit(k);		
+		
 	}
+	
 	public void removeKit(String name) throws UnfoudKitException {
 		
 		this.getKitList().removeKit(name);
 		
 	}
-	public void loadKit(EntityPlayer player, String name) throws UnfoudKitException {
+	
+	public void loadKit(EntityPlayer player, String name) throws UnfoudKitException, UnfoundKitChestException {
 		
 		Kit kit = this.getKit(name);
+		
+		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
+		if(blockPos == null) {
+			
+			throw new UnfoundKitChestException();
+			
+		}		
+		BlockUtils.loadContentInChestBlock(blockPos, kit.getItems());
 		
 	}
-	public void updateContentKit(EntityPlayer player, String name) throws UnfoudKitException {
+	
+	public void updateContentKit(EntityPlayer player, String name) throws UnfoudKitException, UnfoundKitChestException, KitIsEmptyException {
 		
 		Kit kit = this.getKit(name);
+		
+		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
+		if(blockPos == null) {
+			
+			throw new UnfoundKitChestException();
+			
+		}
+		
+		List<ItemStack> content = BlockUtils.getChestBlockContent(blockPos);
+		if(content.isEmpty()) {
+			throw new KitIsEmptyException();
+		}
+		
+		kit.setItems(content);
 		
 	}
 
