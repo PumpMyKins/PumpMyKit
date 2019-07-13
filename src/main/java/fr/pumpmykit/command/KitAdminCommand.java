@@ -115,6 +115,12 @@ public class KitAdminCommand implements ICommand {
 
 			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.updateContentKit(player,name);
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Kit modifié !");
+			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
 
 		} catch (UnfoudKitException e) {
 
@@ -137,7 +143,7 @@ public class KitAdminCommand implements ICommand {
 		} catch (UnfoundKitChestException e) {
 			
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
-			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous avez importer le kit à modifier !");
+			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous avez importer le kit à modifier !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
@@ -166,6 +172,12 @@ public class KitAdminCommand implements ICommand {
 
 			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.loadKit(player,name);
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Kit chargé !");
+			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
 
 		} catch (UnfoudKitException e) {
 
@@ -188,7 +200,7 @@ public class KitAdminCommand implements ICommand {
 		} catch (UnfoundKitChestException e) {
 			
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
-			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous voulez importer le kit !");
+			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous voulez importer le kit !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
@@ -250,11 +262,19 @@ public class KitAdminCommand implements ICommand {
 
 		EntityPlayerMP player = (EntityPlayerMP) sender;
 		try {
+			
 			MainKit.KITSMANAGER.addKit(player,name,displayName);
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Kit ajouté !");
+			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
 		} catch (UnfoundKitChestException e) {
 			
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
-			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous avez ajouté le contenu du le kit à ajouter !");
+			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous avez ajouté le contenu du le kit à ajouter !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
