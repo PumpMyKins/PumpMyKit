@@ -206,7 +206,6 @@ public class KitAdminCommand implements ICommand {
 		String name = args[1];
 		try {
 			
-			EntityPlayer player = (EntityPlayer) sender;
 			MainKit.KITSMANAGER.removeKit(name);
 			
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
