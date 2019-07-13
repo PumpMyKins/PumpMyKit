@@ -66,7 +66,7 @@ public class KitCommand implements ICommand {
 			return;
 		}
 
-		EntityPlayer player = (EntityPlayer) sender;
+		EntityPlayerMP player = (EntityPlayerMP) sender;
 
 		if(!PermissionAPI.hasPermission(player, "pumpmykit.command.kit")) {
 
