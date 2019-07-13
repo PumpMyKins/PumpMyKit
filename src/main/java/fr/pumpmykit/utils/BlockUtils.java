@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.pumpmykit.exceptions.UnfoundKitChestException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BlockUtils {
 
-	public static BlockPos getPosBlockYouAreLooking(EntityPlayer p) {
+	public static BlockPos getPosBlockYouAreLooking(EntityPlayerMP p) {
 		
 		RayTraceResult result = p.rayTrace(5, 1.0F);
 		
