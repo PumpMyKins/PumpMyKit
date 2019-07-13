@@ -2,7 +2,11 @@ package fr.pumpmykit.command;
 
 import java.util.Collections;
 import java.util.List;
+
+import fr.pumpmykit.KitIsEmptyException;
 import fr.pumpmykit.MainKit;
+import fr.pumpmykit.UnfoundKitChestException;
+import fr.pumpmykit.exceptions.DuplicateKitException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
@@ -164,6 +168,14 @@ public class KitAdminCommand implements ICommand {
 
 			sender.sendMessage(txt);
 
+		} catch (UnfoundKitChestException e) {
+			
+			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+			ITextComponent txt2 = new TextComponentString("Vous devez regarder le coffre dans lequel vous voulez importer le kit !");
+			txt2.setStyle(new Style().setColor(TextFormatting.RED));
+			txt.appendSibling(txt2);
+			sender.sendMessage(txt);
+			
 		}
 
 	}
@@ -221,7 +233,18 @@ public class KitAdminCommand implements ICommand {
 
 
 		EntityPlayer player = (EntityPlayer) sender;
-		MainKit.KITSMANAGER.addKit(player,name,displayName);
+		try {
+			MainKit.KITSMANAGER.addKit(player,name,displayName);
+		} catch (UnfoundKitChestException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (KitIsEmptyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DuplicateKitException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
