@@ -39,12 +39,12 @@ public class KitAdminCommand implements ICommand {
 
 	@Override
 	public String getName() {
-		return "kit";
+		return "kitadmin";
 	}
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return "/kit help";
+		return "/kitadmin help";
 	}
 
 	@Override
