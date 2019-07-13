@@ -1,6 +1,7 @@
 package fr.pumpmykit;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import fr.pumpmykit.exceptions.DuplicateKitException;
