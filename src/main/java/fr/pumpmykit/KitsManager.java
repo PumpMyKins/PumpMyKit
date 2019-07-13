@@ -53,6 +53,7 @@ public class KitsManager {
 		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
+		rs.first();
 		this.mySql.sendUpdate("INSERT INTO `playerskit`(`uuid`, `select`, `init_date`) VALUES ('" + player.getUniqueID().toString() + "'," + rs.getInt("per_server_select") + "," + rs.getLong("init_date") + ")");
 
 	}
@@ -61,6 +62,7 @@ public class KitsManager {
 
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
+		rs.first();
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 	}
@@ -68,7 +70,8 @@ public class KitsManager {
 	private void removePlayerKitBdd(EntityPlayerMP player) throws SQLException{
 		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
-
+		
+		rs.first();
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 		
 	}
@@ -132,11 +135,11 @@ public class KitsManager {
 
 		long global_init_date = rs.getLong("init_date");
 
-		rs = this.mySql.sendQuery("SELECT * FROM `playerskit" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");	
+		rs = this.mySql.sendQuery("SELECT * FROM `playerskit_" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");	
 
 		if(!rs.first()) {
 			this.initPlayerKitBdd(player);
-			rs = this.mySql.sendQuery("SELECT * FROM `playerskit" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
+			rs = this.mySql.sendQuery("SELECT * FROM `playerskit_" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 			if(!rs.first()) {
 				throw new UnfoundSqlProfileException(player);
 			}			
@@ -146,7 +149,7 @@ public class KitsManager {
 
 		if(global_init_date != local_init_date) {
 			this.renewPlayerKitBdd(player);	
-			rs = this.mySql.sendQuery("SELECT * FROM `playerskit" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
+			rs = this.mySql.sendQuery("SELECT * FROM `playerskit_" + KitsConfig.servername + "` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 			if(!rs.first()) {
 				throw new UnfoundSqlProfileException(player);
 			}
@@ -185,12 +188,7 @@ public class KitsManager {
 	
 	public void addKit(EntityPlayerMP player, String name, String displayName) throws UnfoundKitChestException, KitIsEmptyException, DuplicateKitException {
 		
-		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
-		if(blockPos == null) {
-			
-			throw new UnfoundKitChestException();
-			
-		}
+		BlockPos blockPos = new BlockPos(player.getPosition().getX(), player.getPosition().getY() - 1, player.getPosition().getZ());
 		
 		List<ItemStack> content = BlockUtils.getChestBlockContent(player.world,blockPos);
 		if(content.isEmpty()) {
@@ -212,12 +210,8 @@ public class KitsManager {
 		
 		Kit kit = this.getKit(name);
 		
-		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
-		if(blockPos == null) {
-			
-			throw new UnfoundKitChestException();
-			
-		}		
+		BlockPos blockPos = new BlockPos(player.getPosition().getX(), player.getPosition().getY() - 1, player.getPosition().getZ());
+		
 		BlockUtils.loadContentInChestBlock(player.world,blockPos, kit.getItems());
 		
 	}
@@ -226,12 +220,7 @@ public class KitsManager {
 		
 		Kit kit = this.getKit(name);
 		
-		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
-		if(blockPos == null) {
-			
-			throw new UnfoundKitChestException();
-			
-		}
+		BlockPos blockPos = new BlockPos(player.getPosition().getX(), player.getPosition().getY() - 1, player.getPosition().getZ());
 		
 		List<ItemStack> content = BlockUtils.getChestBlockContent(player.world,blockPos);
 		if(content.isEmpty()) {
