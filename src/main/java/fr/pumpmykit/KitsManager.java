@@ -49,27 +49,36 @@ public class KitsManager {
 
 	}
 
-	private void initPlayerKitBdd(EntityPlayerMP player) throws Exception {
-
+	private void initPlayerKitBdd(EntityPlayerMP player) throws SQLException {
+		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		this.mySql.sendUpdate("INSERT INTO `playerskit`(`uuid`, `select`, `init_date`) VALUES ('" + player.getUniqueID().toString() + "'," + rs.getInt("per_server_select") + "," + rs.getLong("init_date") + ")");
 
 	}
 
-	private void renewPlayerKitBdd(EntityPlayerMP player) throws Exception {
+	private void renewPlayerKitBdd(EntityPlayerMP player) throws SQLException {
 
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 	}
+	
+	private void removePlayerKitBdd(EntityPlayerMP player) throws SQLException{
+		
+		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
-	public Kit getRandomKit(EntityPlayerMP player) throws Exception {
+		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
+		
+	}
 
+	public void randomKit(EntityPlayerMP player) throws SQLException, UnfoundSqlProfileException, InsufisentGlobalRandomException, UnfoudKitException {
+		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		if(!rs.first()) {
+			this.removePlayerKitBdd(player);
 			throw new UnfoundSqlProfileException(player);
 		}
 
@@ -90,8 +99,7 @@ public class KitsManager {
 
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `global_random`=" + (global_random - 1) + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
-		this.setKitToPlayer(player, kit);		
-		return kit;
+		KitsManager.setKitToPlayer(player, kit);		
 
 	}
 
@@ -113,11 +121,12 @@ public class KitsManager {
 
 	}
 
-	public Kit selectKit(EntityPlayerMP player, String kitName) throws Exception {
+	public void selectKit(EntityPlayerMP player, String kitName) throws UnfoundSqlProfileException, InsufisentSelectException, UnfoudKitException, SQLException {
 
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		if(!rs.first()) {
+			this.removePlayerKitBdd(player);
 			throw new UnfoundSqlProfileException(player);
 		}
 
@@ -154,11 +163,12 @@ public class KitsManager {
 		}
 		
 		Kit kit = this.getKit(kitName);
-
+		
+		if(kit == null) {
+			throw new UnfoudKitException(player);
+		}
+		
 		KitsManager.setKitToPlayer(player, kit);
-
-		return kit;
-
 	}
 
 	private static void setKitToPlayer(EntityPlayer player, Kit kit) {
@@ -182,7 +192,7 @@ public class KitsManager {
 			
 		}
 		
-		List<ItemStack> content = BlockUtils.getChestBlockContent(blockPos);
+		List<ItemStack> content = BlockUtils.getChestBlockContent(player.world,blockPos);
 		if(content.isEmpty()) {
 			throw new KitIsEmptyException();
 		}
@@ -208,7 +218,7 @@ public class KitsManager {
 			throw new UnfoundKitChestException();
 			
 		}		
-		BlockUtils.loadContentInChestBlock(blockPos, kit.getItems());
+		BlockUtils.loadContentInChestBlock(player.world,blockPos, kit.getItems());
 		
 	}
 	
@@ -223,7 +233,7 @@ public class KitsManager {
 			
 		}
 		
-		List<ItemStack> content = BlockUtils.getChestBlockContent(blockPos);
+		List<ItemStack> content = BlockUtils.getChestBlockContent(player.world,blockPos);
 		if(content.isEmpty()) {
 			throw new KitIsEmptyException();
 		}
