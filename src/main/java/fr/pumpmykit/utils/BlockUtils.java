@@ -12,8 +12,6 @@ public class BlockUtils {
 
 	public static BlockPos getPosBlockYouAreLooking(EntityPlayer p) {
 		
-		World world = p.getEntityWorld();
-		
 		RayTraceResult result = p.rayTrace(5, 1.0F);
 		
 		if(result.typeOfHit == Type.BLOCK) {
@@ -23,6 +21,18 @@ public class BlockUtils {
 		}
 		
 		return null;
+		
+	}
+	
+	public static List<ItemStack> getChestBlockContent(BlockPos pos){
+		
+		return null;
+		
+	}
+	
+	public static void loadContentInChestBlock(BlockPos pos, List<ItemStack> content) {
+		
+		
 		
 	}
 	
