@@ -3,11 +3,11 @@ package fr.pumpmykit.command;
 import java.util.Collections;
 import java.util.List;
 
-import fr.pumpmykit.KitIsEmptyException;
 import fr.pumpmykit.MainKit;
-import fr.pumpmykit.UnfoundKitChestException;
 import fr.pumpmykit.exceptions.DuplicateKitException;
+import fr.pumpmykit.exceptions.KitIsEmptyException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
+import fr.pumpmykit.exceptions.UnfoundKitChestException;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
