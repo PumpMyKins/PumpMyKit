@@ -310,7 +310,7 @@ public class KitAdminCommand implements ICommand {
 		txt = new TextComponentString("Voir : ");
 		txt.setStyle(new Style().setColor(TextFormatting.RED));
 
-		txt2 = new TextComponentString("/kit help");
+		txt2 = new TextComponentString("/kitadmin help");
 		txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit help")));
 
 		txt.appendSibling(txt2);
