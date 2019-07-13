@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.Logger;
 
+import fr.pumpmykit.command.KitAdminCommand;
 import fr.pumpmykit.command.KitCommand;
 import fr.pumpmykit.utils.KitList;
 import fr.pumpmykit.utils.MySql;
@@ -64,6 +65,7 @@ public class MainKit
 			KITSMANAGER.setKitList(KitList.getData(event.getServer().getEntityWorld()));
 
 			event.registerServerCommand(new KitCommand());
+			event.registerServerCommand(new KitAdminCommand());
 
 		}
 
