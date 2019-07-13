@@ -171,7 +171,7 @@ public class KitsManager {
 		KitsManager.setKitToPlayer(player, kit);
 	}
 
-	private static void setKitToPlayer(EntityPlayer player, Kit kit) {
+	private static void setKitToPlayer(EntityPlayerMP player, Kit kit) {
 
 		InventoryBasic inv = new InventoryBasic(new TextComponentString(kit.getDisplayName()), kit.getItems().size());
 		
@@ -183,7 +183,7 @@ public class KitsManager {
 		
 	}
 	
-	public void addKit(EntityPlayer player, String name, String displayName) throws UnfoundKitChestException, KitIsEmptyException, DuplicateKitException {
+	public void addKit(EntityPlayerMP player, String name, String displayName) throws UnfoundKitChestException, KitIsEmptyException, DuplicateKitException {
 		
 		BlockPos blockPos = BlockUtils.getPosBlockYouAreLooking(player);
 		if(blockPos == null) {
@@ -208,7 +208,7 @@ public class KitsManager {
 		
 	}
 	
-	public void loadKit(EntityPlayer player, String name) throws UnfoudKitException, UnfoundKitChestException {
+	public void loadKit(EntityPlayerMP player, String name) throws UnfoudKitException, UnfoundKitChestException {
 		
 		Kit kit = this.getKit(name);
 		
@@ -222,7 +222,7 @@ public class KitsManager {
 		
 	}
 	
-	public void updateContentKit(EntityPlayer player, String name) throws UnfoudKitException, UnfoundKitChestException, KitIsEmptyException {
+	public void updateContentKit(EntityPlayerMP player, String name) throws UnfoudKitException, UnfoundKitChestException, KitIsEmptyException {
 		
 		Kit kit = this.getKit(name);
 		
