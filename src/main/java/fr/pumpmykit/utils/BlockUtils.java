@@ -30,16 +30,53 @@ public class BlockUtils {
 		
 	}
 	
-	public static List<ItemStack> getChestBlockContent(BlockPos pos){
+	public static List<ItemStack> getChestBlockContent(World world, BlockPos pos) throws UnfoundKitChestException{		
 		
-		return null;
+		if(!world.getBlockState(pos).getBlock().equals(Blocks.CHEST)) {
+		    throw new UnfoundKitChestException();
+		}
 		
+		TileEntity te = world.getTileEntity(pos);		
+		if(te == null) {
+			 throw new UnfoundKitChestException();
+		}
+		
+		TileEntityChest chest = (TileEntityChest) te;
+		
+		List<ItemStack> content = new ArrayList<>();
+		for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
+
+			content.add(chest.getStackInSlot(slot));
+
+		}		
+		
+		chest.clear();
+		
+		return content;
 	}
 	
-	public static void loadContentInChestBlock(BlockPos pos, List<ItemStack> content) {
+	public static void loadContentInChestBlock(World world, BlockPos pos, List<ItemStack> content) throws UnfoundKitChestException {
 		
+		if(!world.getBlockState(pos).getBlock().equals(Blocks.CHEST)) {
+		    throw new UnfoundKitChestException();
+		}
 		
+		TileEntity te = world.getTileEntity(pos);		
+		if(te == null) {
+			 throw new UnfoundKitChestException();
+		}
 		
+		TileEntityChest chest = (TileEntityChest) te;
+		
+		chest.clear();
+		
+		for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
+
+			chest.setInventorySlotContents(slot, content.get(slot));
+
+		}	
+		
+		chest.markDirty();
 	}
 	
 }
