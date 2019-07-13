@@ -6,6 +6,7 @@ import java.util.List;
 import fr.pumpmykit.exceptions.UnfoundKitChestException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
@@ -46,7 +47,11 @@ public class BlockUtils {
 		List<ItemStack> content = new ArrayList<>();
 		for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
 
-			content.add(chest.getStackInSlot(slot));
+			ItemStack item = chest.getStackInSlot(slot);	
+			if(item == null || item.isEmpty()) {
+				continue;
+			}
+			content.add(item);
 
 		}		
 		
@@ -70,7 +75,7 @@ public class BlockUtils {
 		
 		chest.clear();
 		
-		for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
+		for (int slot = 0; slot < content.size(); slot++) {
 
 			chest.setInventorySlotContents(slot, content.get(slot));
 
