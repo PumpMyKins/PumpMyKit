@@ -122,10 +122,19 @@ public class KitList extends WorldSavedData {
 		return this.kitlist.get(kitname);		
 	}
 	
-	public Kit getRandomKit() {
+	public Kit getRandomKit() throws InsufisentKitsToRandException {
+		
+		if(this.kitlist.size() <= 1) {
+			throw new InsufisentKitsToRandException();
+		}
 		
 		Random random = new Random();
-		return (Kit) this.kitlist.values().toArray()[random.nextInt(this.kitlist.size()-1)];
+		
+		int rand = random.nextInt(this.kitlist.size()-1);
+		
+		Kit kit = new ArrayList<>(this.kitlist.values()).get(rand);
+		
+		return kit;
 		
 	}
 
