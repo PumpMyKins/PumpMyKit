@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import fr.pumpmykit.MainKit;
 import fr.pumpmykit.exceptions.DuplicateKitException;
+import fr.pumpmykit.exceptions.InsufisentKitsToRandException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
