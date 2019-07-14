@@ -58,7 +58,7 @@ public class KitList extends WorldSavedData {
 
 			List<ItemStack> items = new ArrayList<>();
 			NBTTagList contentList = (NBTTagList) tmp_nbt.getTag("items");			
-			for(int y =0; i < contentList.tagCount(); y++) {
+			for(int y =0; y < contentList.tagCount(); y++) {
 
 				NBTTagCompound tmp_nbt_item = contentList.getCompoundTagAt(y);
 				items.add(new ItemStack(tmp_nbt_item));
@@ -84,8 +84,7 @@ public class KitList extends WorldSavedData {
 			NBTTagList contentList = new NBTTagList();
 			for (ItemStack item : k.getItems()) {
 				
-				NBTTagCompound tag = new NBTTagCompound();
-				tag = item.writeToNBT(tag);
+				NBTTagCompound tag = item.serializeNBT();
 				contentList.appendTag(tag);
 				
 			}
