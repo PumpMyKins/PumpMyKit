@@ -8,6 +8,7 @@ import java.util.Set;
 
 import fr.pumpmykit.MainKit;
 import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
+import fr.pumpmykit.exceptions.InsufisentKitsToRandException;
 import fr.pumpmykit.exceptions.InsufisentSelectException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
 import fr.pumpmykit.exceptions.UnfoundSqlProfileException;
