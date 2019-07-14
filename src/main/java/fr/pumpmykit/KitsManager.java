@@ -176,18 +176,42 @@ public class KitsManager {
 			throw new UnfoudKitException(player);
 		}
 		
+		this.mySql.sendUpdate("UPDATE `playerskit_" + KitsConfig.servername + "` SET `select`=" + (per_server_select - 1) + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 		KitsManager.setKitToPlayer(player, kit);
 	}
 
 	private static void setKitToPlayer(EntityPlayerMP player, Kit kit) {
 
-		InventoryBasic inv = new InventoryBasic(new TextComponentString(kit.getDisplayName()), kit.getItems().size());
+		WorldServer w = player.getServerWorld();
 		
-		for (ItemStack item : kit.getItems()) {
-			inv.addItem(item);
-		}
-
-		inv.openInventory(player);
+		w.addScheduledTask(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				for (ItemStack item : kit.getItems()) {
+					ItemHandlerHelper.giveItemToPlayer(player, item);
+				}
+				
+				ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+				ITextComponent txt2 = new TextComponentString("Kit ");
+				txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+				txt.appendSibling(txt2);
+				
+				ITextComponent txt3 = new TextComponentString(kit.getDisplayName());
+				txt3.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE));
+				
+				txt.appendSibling(txt3);
+				
+				ITextComponent txt4 = new TextComponentString(" obtenu !");
+				txt4.setStyle(new Style().setBold(true).setColor(TextFormatting.AQUA));
+				
+				txt.appendSibling(txt4);
+				
+				player.sendMessage(txt);
+				
+			}
+		});
 		
 	}
 	
