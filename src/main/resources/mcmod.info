@@ -1,0 +1,16 @@
+[
+{
+  "modid": "pumpmykit",
+  "name": "PumpMyKit",
+  "description": "Mod for the Kit on the PumpMyKins's servers.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Sufike","Clem_Fern"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
