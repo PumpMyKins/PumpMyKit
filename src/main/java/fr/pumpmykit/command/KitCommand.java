@@ -103,7 +103,7 @@ public class KitCommand implements ICommand {
 			this.helpSubCommand(server,sender,args);			
 		}else if(subCommand.equalsIgnoreCase("select")) {			
 			this.selectSubCommand(server,sender,args);			
-		}else if(subCommand.equalsIgnoreCase("random")) {			
+		}else if(subCommand.equalsIgnoreCase("random")) {		
 			this.randomSubCommand(server,sender,args);			
 		}else if(subCommand.equalsIgnoreCase("list")) {			
 			this.listSubCommand(server,sender,args);		
@@ -264,21 +264,21 @@ public class KitCommand implements ICommand {
 	}
 
 	private void randomSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
-
+		
 		if(args.length != 1) {
 
 			this.synthaxErrorMessage(sender);
 			return;
 
 		}
-
+		
 		MainKit.EXEC.execute(new Runnable() {
 
 			@Override
 			public void run() {
 				
 				EntityPlayerMP player = (EntityPlayerMP) sender;
-
+				
 				try {					
 
 					MainKit.KITSMANAGER.randomKit(player);
@@ -344,8 +344,16 @@ public class KitCommand implements ICommand {
 
 					sender.sendMessage(txt);
 					
+				} catch (InsufisentKitsToRandException e) {
+					
+					ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+					ITextComponent txt2 = new TextComponentString("Pas assez de kit dans la liste pour effectuer un tirage !");
+					txt2.setStyle(new Style().setColor(TextFormatting.RED));
+					txt.appendSibling(txt2);
+					sender.sendMessage(txt);
+					
+					e.printStackTrace();
 				}
-
 			}
 		});
 
