@@ -59,7 +59,7 @@ public class KitsManager {
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		rs.first();
-		this.mySql.sendUpdate("INSERT INTO `playerskit`(`uuid`, `select`, `init_date`) VALUES ('" + player.getUniqueID().toString() + "'," + rs.getInt("per_server_select") + "," + rs.getLong("init_date") + ")");
+		this.mySql.sendUpdate("INSERT INTO `playerskit_" + KitsConfig.servername + "`(`uuid`, `select`, `init_date`) VALUES ('" + player.getUniqueID().toString() + "'," + rs.getInt("per_server_select") + "," + rs.getLong("init_date") + ")");
 
 	}
 
@@ -68,7 +68,7 @@ public class KitsManager {
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 		rs.first();
-		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
+		this.mySql.sendUpdate("UPDATE `playerskit_" + KitsConfig.servername + "` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 
 	}
 	
@@ -77,7 +77,7 @@ public class KitsManager {
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 		
 		rs.first();
-		this.mySql.sendUpdate("UPDATE `playerskit` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
+		this.mySql.sendUpdate("UPDATE `playerskit_" + KitsConfig.servername + "` SET `select`=" + rs.getInt("per_server_select") + ",`init_date`=" + rs.getLong("init_date") + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
 		
 	}
 
