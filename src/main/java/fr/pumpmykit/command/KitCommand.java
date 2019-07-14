@@ -1,6 +1,7 @@
 package fr.pumpmykit.command;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
@@ -489,8 +490,29 @@ public class KitCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
-		// TODO Auto-generated method stub
+		
+		if(args.length == 0) {
+			
+			List<String> l = new ArrayList<String>();
+			
+			l.add("help");
+			l.add("list");
+			l.add("view");
+			l.add("random");
+			l.add("select");
+			
+			return l;
+			
+		}
+		
+		if(args.length == 1) {
+			
+			MainKit.KITSMANAGER.getKitList().getKitlist().keySet();
+			
+		}
+		
 		return Collections.emptyList();
+		
 	}
 
 	@Override
