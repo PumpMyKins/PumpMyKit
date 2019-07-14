@@ -1,5 +1,6 @@
 package fr.pumpmykit.command;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -115,7 +116,7 @@ public class KitAdminCommand implements ICommand {
 
 			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.updateContentKit(player,name);
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Kit modifié !");
 			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
@@ -141,21 +142,21 @@ public class KitAdminCommand implements ICommand {
 			sender.sendMessage(txt);
 
 		} catch (UnfoundKitChestException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous avez importer le kit à modifier !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		} catch (KitIsEmptyException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Le kit que vous essayez de créer est vide !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		}
 
 	}
@@ -172,7 +173,7 @@ public class KitAdminCommand implements ICommand {
 
 			EntityPlayerMP player = (EntityPlayerMP) sender;
 			MainKit.KITSMANAGER.loadKit(player,name);
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Kit chargé !");
 			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
@@ -198,13 +199,13 @@ public class KitAdminCommand implements ICommand {
 			sender.sendMessage(txt);
 
 		} catch (UnfoundKitChestException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous voulez importer le kit !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		}
 
 	}
@@ -218,9 +219,9 @@ public class KitAdminCommand implements ICommand {
 
 		String name = args[1];
 		try {
-			
+
 			MainKit.KITSMANAGER.removeKit(name);
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Kit supprimé !");
 			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
@@ -246,7 +247,7 @@ public class KitAdminCommand implements ICommand {
 			sender.sendMessage(txt);
 
 		}
-		
+
 	}
 
 	private void addSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -262,33 +263,33 @@ public class KitAdminCommand implements ICommand {
 
 		EntityPlayerMP player = (EntityPlayerMP) sender;
 		try {
-			
+
 			MainKit.KITSMANAGER.addKit(player,name,displayName);
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Kit ajouté !");
 			txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		} catch (UnfoundKitChestException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Vous devez etre un block au dessus du coffre dans lequel vous avez ajouté le contenu du le kit à ajouter !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		} catch (KitIsEmptyException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Le kit que vous essayez de créer est vide !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
 			txt.appendSibling(txt2);
 			sender.sendMessage(txt);
-			
+
 		} catch (DuplicateKitException e) {
-			
+
 			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
 			ITextComponent txt2 = new TextComponentString("Kit du même nom déjà existant !");
 			txt2.setStyle(new Style().setColor(TextFormatting.RED));
@@ -304,7 +305,7 @@ public class KitAdminCommand implements ICommand {
 			txt.appendSibling(txt2);
 
 			sender.sendMessage(txt);
-			
+
 		}
 
 	}
@@ -317,7 +318,7 @@ public class KitAdminCommand implements ICommand {
 			return;
 
 		}
-		
+
 	}
 
 	private void synthaxErrorMessage(ICommandSender sender) {
@@ -348,7 +349,26 @@ public class KitAdminCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
-		// TODO Auto-generated method stub
+		if(args.length == 0) {
+
+			List<String> l = new ArrayList<String>();
+
+			l.add("help");
+			l.add("add");
+			l.add("remove");
+			l.add("load");
+			l.add("update-content");
+
+			return l;
+
+		}
+
+		if(args.length == 1) {
+
+			MainKit.KITSMANAGER.getKitList().getKitlist().keySet();
+
+		}
+
 		return Collections.emptyList();
 	}
 
