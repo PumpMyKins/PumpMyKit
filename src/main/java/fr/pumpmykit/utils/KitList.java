@@ -102,16 +102,16 @@ public class KitList extends WorldSavedData {
 		if(!this.kitlist.containsKey(kitname)) {
 			throw new UnfoudKitException(kitname);
 		}
+		this.kitlist.remove(kitname);	
 		markDirty();
-		this.kitlist.remove(kitname);		
 	}
 
 	public void addKit(Kit k) throws DuplicateKitException {
 		if(this.kitlist.containsKey(k.getName())) {
 			throw new DuplicateKitException(k.getName());
-		}	
+		}
+		this.kitlist.put(k.getName(), k);	
 		markDirty();
-		this.kitlist.put(k.getName(), k);		
 	}
 
 	public Kit getKit(String kitname) throws UnfoudKitException {
