@@ -80,10 +80,10 @@ public class KitsManager {
 		
 	}
 
-	public void randomKit(EntityPlayerMP player) throws SQLException, UnfoundSqlProfileException, InsufisentGlobalRandomException, UnfoudKitException {
+	public void randomKit(EntityPlayerMP player) throws SQLException, UnfoundSqlProfileException, InsufisentGlobalRandomException, UnfoudKitException, InsufisentKitsToRandException {
 		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
-
+		
 		if(!rs.first()) {
 			this.removePlayerKitBdd(player);
 			throw new UnfoundSqlProfileException(player);
@@ -99,15 +99,15 @@ public class KitsManager {
 		}
 		
 		Kit kit = this.kitList.getRandomKit();
-
+		
 		if(kit == null) {
 			throw new UnfoudKitException(player);
 		}
-
+		
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `global_random`=" + (global_random - 1) + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
-
+		
 		KitsManager.setKitToPlayer(player, kit);		
-
+		
 	}
 
 	public List<Kit> listKit(){
