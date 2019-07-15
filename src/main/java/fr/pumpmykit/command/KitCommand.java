@@ -460,30 +460,30 @@ public class KitCommand implements ICommand {
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit select nom_du_kit ");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
-		txt2 = new TextComponentString("Vous pouvez sélectionner, sur chaque serveur, un kit de votre choix !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit select")));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit select")));		
+		txt2 = new TextComponentString("Vous pouvez sÃ©lectionner, sur chaque serveur, un kit de votre choix !");
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));		
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit random ");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
-		txt2 = new TextComponentString("Vous pouvez effectuer un tirage sur le serveur de votre choix afin d'obtenir un kit aléatoire !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit random")));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit random")));
+		txt2 = new TextComponentString("Vous pouvez effectuer un tirage sur le serveur de votre choix afin d'obtenir un kit alÃ©atoire !");
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit list ");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit list")));
 		txt2 = new TextComponentString("Pour obtenir la liste des kits !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit list")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit view nom_du_kit ");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit view")));
 		txt2 = new TextComponentString("Pour voir le contenue du kit !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit view")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));		
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
