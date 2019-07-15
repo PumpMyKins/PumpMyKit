@@ -312,13 +312,48 @@ public class KitAdminCommand implements ICommand {
 
 	private void helpSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 
-		if(args.length != 1) {
-
-
-			return;
-
-		}
-
+		ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+		ITextComponent txt2 = new TextComponentString("Liste des commandes staff : ");
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit add name display_name");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Commande pour ajouter un kit !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit add")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit remove name");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Commande pour supprimer un kit !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit remove")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit load name");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Pour charger le kit dans le coffre en dessou de vous !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit load")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit update-content name");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Pour modifier le contenu d'un kit par le contenu du coffre en dessou de vous !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit update-content")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		/**
+		 * 
+		 * l.add("help");
+			l.add("add");
+			l.add("remove");
+			l.add("load");
+			l.add("update-content");
+		 */
 	}
 
 	private void synthaxErrorMessage(ICommandSender sender) {
