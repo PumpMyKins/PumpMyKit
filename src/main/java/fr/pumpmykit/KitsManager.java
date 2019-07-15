@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.pumpmykit.exceptions.DuplicateKitException;
 import fr.pumpmykit.exceptions.InsufisentGlobalRandomException;
+import fr.pumpmykit.exceptions.InsufisentKitsToRandException;
 import fr.pumpmykit.exceptions.InsufisentSelectException;
 import fr.pumpmykit.exceptions.KitIsEmptyException;
 import fr.pumpmykit.exceptions.UnfoudKitException;
@@ -15,9 +16,7 @@ import fr.pumpmykit.utils.BlockUtils;
 import fr.pumpmykit.utils.Kit;
 import fr.pumpmykit.utils.KitList;
 import fr.pumpmykit.utils.MySql;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -81,10 +80,10 @@ public class KitsManager {
 		
 	}
 
-	public void randomKit(EntityPlayerMP player) throws SQLException, UnfoundSqlProfileException, InsufisentGlobalRandomException, UnfoudKitException {
+	public void randomKit(EntityPlayerMP player) throws SQLException, UnfoundSqlProfileException, InsufisentGlobalRandomException, UnfoudKitException, InsufisentKitsToRandException {
 		
 		ResultSet rs = this.mySql.sendQuery("SELECT * FROM `playerskit` WHERE `uuid`='" + player.getUniqueID().toString() + "'");
-
+		
 		if(!rs.first()) {
 			this.removePlayerKitBdd(player);
 			throw new UnfoundSqlProfileException(player);
@@ -100,15 +99,15 @@ public class KitsManager {
 		}
 		
 		Kit kit = this.kitList.getRandomKit();
-
+		
 		if(kit == null) {
 			throw new UnfoudKitException(player);
 		}
-
+		
 		this.mySql.sendUpdate("UPDATE `playerskit` SET `global_random`=" + (global_random - 1) + " WHERE `uuid`='" + player.getUniqueID().toString() + "'");
-
+		
 		KitsManager.setKitToPlayer(player, kit);		
-
+		
 	}
 
 	public List<Kit> listKit(){
