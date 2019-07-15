@@ -317,35 +317,35 @@ public class KitAdminCommand implements ICommand {
 		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
-		
+
 		txt = new TextComponentString("/kit add name display_name");
 		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit add")));
 		txt2 = new TextComponentString("Commande pour ajouter un kit !");
 		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
-		
+
 		txt = new TextComponentString("/kit remove name");
 		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit remove")));
 		txt2 = new TextComponentString("Commande pour supprimer un kit !");
 		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
-		
+
 		txt = new TextComponentString("/kit load name");
 		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit load")));
 		txt2 = new TextComponentString("Pour charger le kit dans le coffre en dessou de vous !");
 		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
-		
+
 		txt = new TextComponentString("/kit update-content name");
 		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit update-content")));
 		txt2 = new TextComponentString("Pour modifier le contenu d'un kit par le contenu du coffre en dessou de vous !");
 		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
-		
+
 		/**
 		 * 
 		 * l.add("help");
@@ -384,27 +384,22 @@ public class KitAdminCommand implements ICommand {
 	@Override
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
-		if(args.length == 0) {
 
-			List<String> l = new ArrayList<String>();
+		List<String> l = new ArrayList<String>();
 
-			l.add("help");
-			l.add("add");
-			l.add("remove");
-			l.add("load");
-			l.add("update-content");
+		l.add("help");
+		l.add("add");
+		l.add("remove");
+		l.add("load");
+		l.add("update-content");
 
-			return l;
-
+		if(args.length != 0 & l.contains(args[0])) {
+			
+			return new ArrayList<>(MainKit.KITSMANAGER.getKitList().getKitlist().keySet());
+			
 		}
 
-		if(args.length == 1) {
-
-			MainKit.KITSMANAGER.getKitList().getKitlist().keySet();
-
-		}
-
-		return Collections.emptyList();
+		return l;
 	}
 
 	@Override

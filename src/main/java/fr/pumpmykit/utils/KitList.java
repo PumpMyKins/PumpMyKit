@@ -130,7 +130,7 @@ public class KitList extends WorldSavedData {
 		
 		Random random = new Random();
 		
-		int rand = random.nextInt(this.kitlist.size()-1);
+		int rand = random.nextInt(this.kitlist.size());
 		
 		Kit kit = new ArrayList<>(this.kitlist.values()).get(rand);
 		
