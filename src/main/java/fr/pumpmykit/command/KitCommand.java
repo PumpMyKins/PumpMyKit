@@ -518,27 +518,21 @@ public class KitCommand implements ICommand {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			BlockPos targetPos) {
 		
-		if(args.length == 0) {
+		List<String> l = new ArrayList<String>();
+		
+		l.add("help");
+		l.add("list");
+		l.add("view");
+		l.add("random");
+		l.add("select");
+		
+		if(args.length != 0 & l.contains(args[0])) {
 			
-			List<String> l = new ArrayList<String>();
-			
-			l.add("help");
-			l.add("list");
-			l.add("view");
-			l.add("random");
-			l.add("select");
-			
-			return l;
+			return new ArrayList<>(MainKit.KITSMANAGER.getKitList().getKitlist().keySet());
 			
 		}
 		
-		if(args.length == 1) {
-			
-			MainKit.KITSMANAGER.getKitList().getKitlist().keySet();
-			
-		}
-		
-		return Collections.emptyList();
+		return l;
 		
 	}
 
