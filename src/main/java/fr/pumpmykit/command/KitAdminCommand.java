@@ -29,7 +29,7 @@ public class KitAdminCommand implements ICommand {
 
 	public KitAdminCommand() {
 
-		PermissionAPI.registerNode("pumpmykit.command.kitadmin", DefaultPermissionLevel.NONE, "Command Kit Permission");
+		PermissionAPI.registerNode("pumpmykit.command.kitadmin", DefaultPermissionLevel.OP, "Command Kit Permission");
 
 	}
 
