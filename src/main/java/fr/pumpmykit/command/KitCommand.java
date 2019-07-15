@@ -453,13 +453,40 @@ public class KitCommand implements ICommand {
 
 	private void helpSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 
-		if(args.length != 1) {
-
-
-			return;
-
-		}
-
+		ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+		ITextComponent txt2 = new TextComponentString("Liste des commandes : ");
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit select nom_du_kit ");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Vous pouvez sélectionner, sur chaque serveur, un kit de votre choix !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit select")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit random ");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Vous pouvez effectuer un tirage sur le serveur de votre choix afin d'obtenir un kit aléatoire !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit random")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit list ");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Pour obtenir la liste des kits !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit list")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
+		txt = new TextComponentString("/kit view nom_du_kit ");
+		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt2 = new TextComponentString("Pour voir le contenue du kit !");
+		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit view")));
+		txt.appendSibling(txt2);
+		sender.sendMessage(txt);
+		
 	}
 
 	private void synthaxErrorMessage(ICommandSender sender) {
