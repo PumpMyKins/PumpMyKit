@@ -319,30 +319,30 @@ public class KitAdminCommand implements ICommand {
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit add name display_name");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit add")));
 		txt2 = new TextComponentString("Commande pour ajouter un kit !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit add")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit remove name");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit remove")));
 		txt2 = new TextComponentString("Commande pour supprimer un kit !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit remove")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit load name");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit load")));
 		txt2 = new TextComponentString("Pour charger le kit dans le coffre en dessou de vous !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit load")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
 		txt = new TextComponentString("/kit update-content name");
-		txt.setStyle(new Style().setColor(TextFormatting.AQUA));
+		txt.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit update-content")));
 		txt2 = new TextComponentString("Pour modifier le contenu d'un kit par le contenu du coffre en dessou de vous !");
-		txt2.setStyle(new Style().setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/kit update-content")));
+		txt2.setStyle(new Style().setColor(TextFormatting.AQUA));
 		txt.appendSibling(txt2);
 		sender.sendMessage(txt);
 		
