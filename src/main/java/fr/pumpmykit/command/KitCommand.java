@@ -68,30 +68,6 @@ public class KitCommand implements ICommand {
 			return;
 		}
 
-		EntityPlayerMP player = (EntityPlayerMP) sender;
-
-		if(!PermissionAPI.hasPermission(player, "pumpmykit.command.kit")) {
-
-			ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
-			ITextComponent txt2 = new TextComponentString("Fonctionnalité achetable en boutique");
-			txt2.setStyle(new Style().setColor(TextFormatting.RED));
-			txt.appendSibling(txt2);
-			sender.sendMessage(txt);
-
-			txt = new TextComponentString("Voir : ");
-			txt.setStyle(new Style().setColor(TextFormatting.RED));
-
-			txt2 = new TextComponentString("http://store.pumpmykins.eu/");
-			txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.OPEN_URL, "http://store.pumpmykins.eu/")));
-
-			txt.appendSibling(txt2);
-
-			sender.sendMessage(txt);
-
-			return;
-
-		}
-
 		if(args.length == 0) {
 
 			this.helpSubCommand(server,sender,args);
@@ -279,6 +255,28 @@ public class KitCommand implements ICommand {
 			public void run() {
 				
 				EntityPlayerMP player = (EntityPlayerMP) sender;
+
+				if(!PermissionAPI.hasPermission(player, "pumpmykit.command.kit")) {
+
+					ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+					ITextComponent txt2 = new TextComponentString("Fonctionnalité achetable en boutique");
+					txt2.setStyle(new Style().setColor(TextFormatting.RED));
+					txt.appendSibling(txt2);
+					sender.sendMessage(txt);
+
+					txt = new TextComponentString("Voir : ");
+					txt.setStyle(new Style().setColor(TextFormatting.RED));
+
+					txt2 = new TextComponentString("http://store.pumpmykins.eu/");
+					txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.OPEN_URL, "http://store.pumpmykins.eu/")));
+
+					txt.appendSibling(txt2);
+
+					sender.sendMessage(txt);
+
+					return;
+
+				}
 				
 				try {					
 
@@ -375,6 +373,28 @@ public class KitCommand implements ICommand {
 
 				String name = args[1];
 				EntityPlayerMP player = (EntityPlayerMP) sender;
+				
+				if(!PermissionAPI.hasPermission(player, "pumpmykit.command.kit")) {
+
+					ITextComponent txt = MainKit.CHAT_PREFIX.createCopy();
+					ITextComponent txt2 = new TextComponentString("Fonctionnalité achetable en boutique");
+					txt2.setStyle(new Style().setColor(TextFormatting.RED));
+					txt.appendSibling(txt2);
+					sender.sendMessage(txt);
+
+					txt = new TextComponentString("Voir : ");
+					txt.setStyle(new Style().setColor(TextFormatting.RED));
+
+					txt2 = new TextComponentString("http://store.pumpmykins.eu/");
+					txt2.setStyle(new Style().setBold(true).setColor(TextFormatting.DARK_BLUE).setClickEvent(new ClickEvent(Action.OPEN_URL, "http://store.pumpmykins.eu/")));
+
+					txt.appendSibling(txt2);
+
+					sender.sendMessage(txt);
+
+					return;
+
+				}
 
 				try {					
 
