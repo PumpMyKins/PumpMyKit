@@ -252,7 +252,7 @@ public class KitAdminCommand implements ICommand {
 
 	private void addSubCommand(MinecraftServer server, ICommandSender sender, String[] args) {
 
-		if(args.length != 3) {
+		if(!(args.length >= 3)) {
 			this.synthaxErrorMessage(sender);
 			return;			
 		}
